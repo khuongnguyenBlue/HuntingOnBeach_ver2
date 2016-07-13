@@ -15,14 +15,17 @@ public class GameWindow extends Frame implements  Runnable{
     BufferedImage blankBackground, loadedItem;
     int mousepressedtime=0;
     int pressingornot=0;
-    Player player;
-
+    Player player=new Player();
+    Enemies enemy1= new EnemyLvl1(player);
+    Enemies enemy2= new EnemyLvl2(player);
+    Enemies enemy3= new EnemyLvl3(player);
+    Enemies enemy4= new EnemyLvl4(player);
 
     @Override
     public void run() {
         gameLoop();
     }
-    public GameWindow(){
+    public GameWindow() throws IOException {
         initGame();
     }
     void initGame(){
@@ -113,7 +116,11 @@ public class GameWindow extends Frame implements  Runnable{
 
 
     void gameUpdate(){
-
+        player.update();
+        enemy1.update();
+        enemy2.update();
+        enemy3.update();
+        enemy4.update();
         //
 
     }
