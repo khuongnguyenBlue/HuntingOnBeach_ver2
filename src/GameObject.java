@@ -9,16 +9,12 @@ import java.io.IOException;
  */
 public class GameObject {
     BufferedImage sprite;
-    public String fileName;
+
     public int posX, posY;
     public int healthPoint;
     boolean isAlive = true;
     public GameObject(){
-        try {
-            sprite = ImageIO.read(new File(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
     void draw(Graphics g){
         g.drawImage(sprite, posX, posY, null);

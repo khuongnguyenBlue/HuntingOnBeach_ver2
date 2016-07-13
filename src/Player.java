@@ -12,14 +12,23 @@ public class Player extends GameObject {
     public int money;
     public int checkGun;
     public int damage;
-    BufferedImage sprite1 = ImageIO.read(new File("Resource/Player/Player_TYPE1"));
-    BufferedImage sprite2 = ImageIO.read(new File("Resource/Player/Player_TYPE2"));
-    BufferedImage sprite3 = ImageIO.read(new File("Resource/Player/Player_TYPE3"));
-    public Player() throws IOException {
-        sprite = sprite1;
+    BufferedImage sprite2, sprite3;
+    String fileName1 = "Resource/Player/Player_TYPE1.png";
+    String fileName2 = "Resource/Player/Player_TYPE2.png";
+    String fileName3 = "Resource/Player/Player_TYPE3.png";
+    public Player(){
+        try {
+            sprite = resize(ImageIO.read(new File(fileName1)),2);
+            sprite2 = resize(ImageIO.read(new File(fileName2)),2);
+            sprite3 = resize(ImageIO.read(new File(fileName3)),2);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     public void shot(){
+        System.out.println("shot");
         if (type==0){
             damage=20;
         }
@@ -31,7 +40,7 @@ public class Player extends GameObject {
     void changeGun(){
         type = checkGun%3;
         if (type==0){
-            sprite = sprite1;
+            sprite = sprite;
         }
         else if (type==1){
             sprite = sprite2;

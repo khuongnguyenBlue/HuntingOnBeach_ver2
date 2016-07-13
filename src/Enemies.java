@@ -1,3 +1,8 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 /**
  * Created by Laptop88 on 7/13/2016.
  */
@@ -7,9 +12,14 @@ public class Enemies extends GameObject{
     public int explosionType;
     int count = 0;
     Player player;
-    public Enemies(Player player){
-        posY = 300+(int)(Math.random()*300);
+    public Enemies(String fileName, Player player){
+        posY = 200+(int)(Math.random()*200);
         this.player = player;
+        try {
+            sprite = ImageIO.read(new File(fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     void checkIfHit(int x, int y){
         if (this.getRectAround().contains(x, y)){
@@ -27,6 +37,7 @@ public class Enemies extends GameObject{
     }
     void exploded(){
         isAlive=false;
+        player.money += this.healthPoint;
         this.createExplosion();
     }
     Explosion createExplosion(){
@@ -43,7 +54,7 @@ public class Enemies extends GameObject{
     }
 
     boolean checkIfStop(){
-        if (posX>500){
+        if (posX>220){
             speed=0;
             return true;
         }
@@ -57,5 +68,11 @@ public class Enemies extends GameObject{
             player.healthPoint-=10;
             count=0;
         }
+    }
+
+    @Override
+    void draw(Graphics g) {
+        super.draw(g);
+        g.drawString(""+healthPoint, posX, posY);
     }
 }

@@ -145,6 +145,12 @@ public class GameWindow extends Frame implements  Runnable{
         Graphics bufferGraphics = bufferImage.getGraphics();
         bufferGraphics.drawImage(blankBackground, 0, 0, null);
 
+        enemy1.draw(bufferGraphics);
+        enemy2.draw(bufferGraphics);
+        enemy3.draw(bufferGraphics);
+        enemy4.draw(bufferGraphics);
+        player.draw(bufferGraphics);
+
         g.drawImage(bufferImage, 0, 0, null);
 
     }
