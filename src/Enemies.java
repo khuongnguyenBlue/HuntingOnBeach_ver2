@@ -3,13 +3,20 @@
  */
 public class Enemies extends GameObject{
     public int level;
+    public int speed = 5;
     public int explosionType;
-    void checkIfHit(int x, int y, Player player){
+    int count = 0;
+    Player player;
+    public Enemies(Player player){
+        posY = 300+(int)(Math.random()*300);
+        this.player = player;
+    }
+    void checkIfHit(int x, int y){
         if (this.getRectAround().contains(x, y)){
-            this.getHit(player);
+            this.getHit();
         }
     }
-    void getHit (Player player){
+    void getHit (){
         if (this.isAlive){
             healthPoint-=player.damage;
             if (healthPoint<=0) {
@@ -24,5 +31,31 @@ public class Enemies extends GameObject{
     }
     Explosion createExplosion(){
         return new Explosion (posX, posY, this.explosionType);
+    }
+
+    @Override
+    void update() {
+        super.update();
+        posX+=speed;
+        if (checkIfStop()){
+            shot();
+        }
+    }
+
+    boolean checkIfStop(){
+        if (posX>500){
+            speed=0;
+            return true;
+        }
+        return false;
+    }
+    void shot(){
+        //tao hieu ung ban dan
+        //tru mau
+        count++;
+        if (count==50){
+            player.healthPoint-=10;
+            count=0;
+        }
     }
 }

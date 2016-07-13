@@ -3,7 +3,6 @@
  */
 public class Explosion extends GameObject {
     public int type;
-    public static final String EXPLOSION_RS_1 = "";
 
     public Explosion(int x, int y, int type){
         this.type = type;
