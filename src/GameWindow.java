@@ -36,10 +36,10 @@ public class GameWindow extends Frame implements  Runnable{
         this.setTitle("Hunting on beach");
         this.setSize(640,480);
         this.setVisible(true);
-        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-                cursorImg, new Point(0, 0), "blank cursor");
-        this.setCursor(blankCursor);
+//        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+//        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+//                cursorImg, new Point(0, 0), "blank cursor");
+//        this.setCursor(blankCursor);
 
         //cam bien chuot
         this.addWindowListener(new WindowAdapter() {
@@ -64,13 +64,13 @@ public class GameWindow extends Frame implements  Runnable{
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == 1) {
-                    player.shot();
-                    enemy1.checkIfHit(e.getX(), e.getY());
-                    enemy2.checkIfHit(e.getX(), e.getY());
-                    enemy3.checkIfHit(e.getX(), e.getY());
-                    enemy4.checkIfHit(e.getX(), e.getY());
-                }
+//                if (e.getButton() == 1) {
+//                    player.shot();
+//                    enemy1.checkIfHit(e.getX(), e.getY());
+//                    enemy2.checkIfHit(e.getX(), e.getY());
+//                    enemy3.checkIfHit(e.getX(), e.getY());
+//                    enemy4.checkIfHit(e.getX(), e.getY());
+//                }
             }
 
             @Override
@@ -107,7 +107,18 @@ public class GameWindow extends Frame implements  Runnable{
 
 
     void gameUpdate(){
-        player.update();
+        if (mousepressedtime>0) {
+            pressingornot=1;
+        }
+        if (pressingornot==1) {
+            player.shot();
+
+            enemy1.checkIfHit(player.posX+25, player.posY+25);
+            enemy2.checkIfHit(player.posX+25, player.posY+25);
+            enemy3.checkIfHit(player.posX+25, player.posY+25);
+            enemy4.checkIfHit(player.posX+25, player.posY+25);
+        }
+
         enemy1.update();
         enemy2.update();
         enemy3.update();
