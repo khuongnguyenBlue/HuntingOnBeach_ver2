@@ -1,9 +1,4 @@
-import screen.GameManager;
-import screen.GameplayScreen;
-import screen.MenuScreen;
-
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -16,10 +11,10 @@ import java.io.IOException;
 public class GameWindow extends Frame implements Runnable{
     BufferedImage background;
     BufferedImage bufferImage;
-    BufferedImage yatchImage =ImageIO.read(new File("Resource/Background/image 132.png"));
+    BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon;
 
-    Background drawnBackground= new Background();
+    BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0;
     boolean isPressing = false;
     Player player=new Player();
@@ -44,6 +39,13 @@ public class GameWindow extends Frame implements Runnable{
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
                 cursorImg, new Point(0, 0), "blank cursor");
         this.setCursor(blankCursor);
+
+        try {
+            yatchImage=ImageIO.read(new File("Resource/Background/image 132.png"));
+            shipImage=ImageIO.read(new File("Resource/Background/image 1134.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //cam bien chuot
         this.addWindowListener(new WindowAdapter() {
@@ -179,6 +181,7 @@ public class GameWindow extends Frame implements Runnable{
         {bufferGraphics.drawImage(drawnBackground.blankBackground.getSubimage(countScreen%640,0,640,480),0,0,null);
         countScreen+=5;}
         bufferGraphics.drawImage(yatchImage,400,200,null);
+        bufferGraphics.drawImage(shipImage,0,350,null);
         enemy1.draw(bufferGraphics);
         enemy2.draw(bufferGraphics);
         enemy3.draw(bufferGraphics);
