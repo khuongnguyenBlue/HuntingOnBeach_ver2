@@ -20,7 +20,6 @@ public class BackgroundBuild {
             skyBackground = ImageIO.read(new File("Resource/Background/image 1085.jpg"));
             cityBackground= ImageIO.read(new File("Resource/Background/image 1108.png"));
             islandBackground=ImageIO.read(new File("Resource/Background/image 1123.png"));
-
             waterBackground= ImageIO.read(new File("Resource/Background/image 1088.jpg"));
 
         } catch (IOException e) {
@@ -39,8 +38,8 @@ public class BackgroundBuild {
         blankBackground.getGraphics().drawImage(waterBackground, 960, 100, null);
         blankBackground.getGraphics().drawImage(skyBackground, 0, 0, null);
         blankBackground.getGraphics().drawImage(skyBackground,640,0,null);
-        blankBackground.getGraphics().drawImage(islandBackground, 0,0,null);
-        blankBackground.getGraphics().drawImage(islandBackground,0 ,0,null);
+        blankBackground.getGraphics().drawImage(cityBackground, 0, 70,null);
+        blankBackground.getGraphics().drawImage(cityBackground, 640, 70,null);
 
     };
 
