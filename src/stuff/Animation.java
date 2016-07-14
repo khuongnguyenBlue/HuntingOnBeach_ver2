@@ -15,15 +15,11 @@ public class Animation {
     private int index = 0;
     private int countTime = 0;
     private int time;
-    public Animation(String imageRS,int w, int h,int time){
+    public Animation(String imagestring,int w, int h,int time, int imageNumber){
         this.time = time;
         try {
-            BufferedImage image = ImageIO.read(new File(imageRS));
-            for (int i = 0; i < image.getWidth()/w; i++){
-                for (int j = 0; j < image.getHeight()/h; j++){
-                    BufferedImage subImage = image.getSubimage(i * w, j * h, w, h);
-                    frames.add(subImage);
-                }
+            for (int i = 1; i < imageNumber+1; i++){
+                frames.add(ImageIO.read(new File(imagestring+i+").png")));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,10 +37,7 @@ public class Animation {
             }
         }
     }
-
     public void draw(Graphics g, int posX, int posY){
-
-        g.drawImage(frames.get(index), posX, posY , null);
+        g.drawImage(frames.get(index), posX-frames.get(index).getHeight()/2, posY-frames.get(index).getWidth()/2, null);
     }
-
 }

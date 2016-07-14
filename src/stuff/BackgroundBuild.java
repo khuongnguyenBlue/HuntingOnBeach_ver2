@@ -12,7 +12,7 @@ public class BackgroundBuild {
     BufferedImage blankBackground;
     BufferedImage skyBackground, cityBackground, islandBackground, waterBackground, ship;
 
-    Animation animation;
+    Animation explosion;
     public BackgroundBuild(){
         if(blankBackground == null){
             blankBackground = new BufferedImage(1280, 480, 1);
@@ -26,10 +26,10 @@ public class BackgroundBuild {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        animation = new Animation("Resource/cat.png",512, 256,31);
+        explosion = new Animation("Resource/char/exploding (",110, 110,31,9);
     }
     public void update(){
-        animation.update();
+        explosion.update();
     }
 
     public void draw(){
@@ -41,6 +41,7 @@ public class BackgroundBuild {
         blankBackground.getGraphics().drawImage(skyBackground,640,0,null);
         blankBackground.getGraphics().drawImage(cityBackground, 0, 70,null);
         blankBackground.getGraphics().drawImage(cityBackground, 640, 70,null);
+        explosion.draw(blankBackground.getGraphics(),100,100);
 
     };
 
