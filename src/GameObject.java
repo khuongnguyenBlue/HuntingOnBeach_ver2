@@ -14,7 +14,7 @@ public class GameObject {
     public int healthPoint;
     boolean isAlive = true;
 
-    void draw(Graphics g){
+    public void draw(Graphics g){
         g.drawImage(sprite, posX, posY, null);
 
     }
@@ -40,10 +40,10 @@ public class GameObject {
 
         return dimg;
     }
-    void update(){
+    public void update(){
 
     }
     public Rectangle getRectAround(){
-        return new Rectangle(posX+2*sprite.getWidth()/10, posY+sprite.getHeight()*2/10, sprite.getWidth()*7/10, sprite.getHeight()*4/10);
+        return new Rectangle(posX+2*sprite.getWidth()/10, posY+sprite.getHeight()*2/10, sprite.getWidth()*7/10, sprite.getHeight()*5/10);
     }
 }

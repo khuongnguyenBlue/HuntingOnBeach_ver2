@@ -1,3 +1,7 @@
+import screen.GameManager;
+import screen.GameplayScreen;
+import screen.MenuScreen;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +13,13 @@ import java.io.IOException;
 /**
  * Created by Hoangelato on 13/07/2016.
  */
-public class GameWindow extends Frame implements  Runnable{
+public class GameWindow extends Frame implements Runnable{
     BufferedImage background;
     BufferedImage bufferImage;
 
     BufferedImage mouseIcon;
 
-    Background drawedBackground= new Background();
+    Background drawnBackground= new Background();
     int mousePressedTime=0;
     boolean isPressing = false;
     Player player=new Player();
@@ -91,7 +95,13 @@ public class GameWindow extends Frame implements  Runnable{
             public void mouseExited(MouseEvent e) {
 
             }
+
         });
+       // MenuScreen menuScreen = new MenuScreen();
+        //this.addMouseListener(menuScreen);
+       // GameManager.getInstance().getStackScreen().push(menuScreen);
+       // GameplayScreen gameplayScreen = new GameplayScreen();
+
 
     }
 
@@ -101,6 +111,7 @@ public class GameWindow extends Frame implements  Runnable{
 
 
     void gameUpdate(){
+        drawnBackground.update();
         if (isPressing) mousePressedTime++;
         if (mousePressedTime>40) {
             isPressing=true;
@@ -151,9 +162,12 @@ public class GameWindow extends Frame implements  Runnable{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            ;
+
         }
     }
+
+    int countScreen;
+
     @Override
     public void update(Graphics g) {
         if(bufferImage == null){
@@ -161,7 +175,9 @@ public class GameWindow extends Frame implements  Runnable{
         }
         Graphics bufferGraphics = bufferImage.getGraphics();
         bufferGraphics.drawImage(bufferImage, 0, 0, null);
-        drawedBackground.draw(bufferGraphics);
+        drawnBackground.draw();
+        {bufferGraphics.drawImage(drawnBackground.blankBackground.getSubimage(countScreen%640,0,640,480),0,0,null);
+        countScreen++;}
         enemy1.draw(bufferGraphics);
         enemy2.draw(bufferGraphics);
         enemy3.draw(bufferGraphics);

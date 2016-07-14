@@ -47,7 +47,7 @@ public class Enemies extends GameObject{
     }
 
     @Override
-    void update() {
+    public void update() {
         super.update();
         if (isAlive) {
             posX += speed;
@@ -75,12 +75,12 @@ public class Enemies extends GameObject{
     }
 
     @Override
-    void draw(Graphics g) {
+    public void draw(Graphics g) {
         super.draw(g);
         g.setColor(Color.white);
         g.drawString(""+healthPoint,posX-5, posY );
-        g.setColor(Color.red);
-        g.fillRect(posX+sprite.getWidth()*2/10, posY, healthPoint/2, 2);
+        g.setColor(Color.orange);
+        g.fillRect(posX+sprite.getWidth()*2/10, posY, healthPoint/6, 2);
 
     }
 }
