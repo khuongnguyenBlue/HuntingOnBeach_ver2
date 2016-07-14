@@ -16,8 +16,8 @@ public class GameWindow extends Frame implements  Runnable{
     BufferedImage mouseIcon;
 
     Background drawedBackground= new Background();
-    int mousepressedtime=0;
-    int pressingornot=0;
+    int mousePressedTime=0;
+    boolean isPressing = false;
     Player player=new Player();
     Enemies enemy1= new EnemyLvl1(player);
     Enemies enemy2= new EnemyLvl2(player);
@@ -36,10 +36,10 @@ public class GameWindow extends Frame implements  Runnable{
         this.setTitle("Hunting on beach");
         this.setSize(640,480);
         this.setVisible(true);
-//        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-//        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-//                cursorImg, new Point(0, 0), "blank cursor");
-//        this.setCursor(blankCursor);
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                cursorImg, new Point(0, 0), "blank cursor");
+        this.setCursor(blankCursor);
 
         //cam bien chuot
         this.addWindowListener(new WindowAdapter() {
@@ -64,27 +64,21 @@ public class GameWindow extends Frame implements  Runnable{
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//                if (e.getButton() == 1) {
-//                    player.shot();
-//                    enemy1.checkIfHit(e.getX(), e.getY());
-//                    enemy2.checkIfHit(e.getX(), e.getY());
-//                    enemy3.checkIfHit(e.getX(), e.getY());
-//                    enemy4.checkIfHit(e.getX(), e.getY());
-//                }
+
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == 1) {
-                    mousepressedtime++;
+                    isPressing=true;
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (e.getButton()==1) {
-                    mousepressedtime=0;
-                    pressingornot=0;
+                    mousePressedTime=0;
+                    isPressing = false;
                 }
             }
 
@@ -107,10 +101,11 @@ public class GameWindow extends Frame implements  Runnable{
 
 
     void gameUpdate(){
-        if (mousepressedtime>0) {
-            pressingornot=1;
+        if (isPressing) mousePressedTime++;
+        if (mousePressedTime>40) {
+            isPressing=true;
         }
-        if (pressingornot==1) {
+        if (isPressing) {
             player.shot();
 
             enemy1.checkIfHit(player.posX+25, player.posY+25);

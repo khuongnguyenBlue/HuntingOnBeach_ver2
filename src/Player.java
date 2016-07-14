@@ -33,12 +33,12 @@ public class Player extends GameObject {
     public void shot(){
         System.out.println("shot");
         if (type==0){
-            damage=20;
+            damage=3;
         }
         else if (type==1) {
-            damage = 40;
+            damage = 5;
         }
-        else damage = 60;
+        else damage = 8;
     }
     void changeGun(){
         type = checkGun%3;

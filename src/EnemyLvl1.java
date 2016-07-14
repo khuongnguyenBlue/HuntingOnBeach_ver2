@@ -6,7 +6,7 @@ public class EnemyLvl1 extends Enemies {
 
     public EnemyLvl1(Player player) {
         super(FILE_NAME, player);
-        maxHP = 80;
+        maxHP = 150;
         healthPoint = maxHP;
         damage = 10;
     }
