@@ -10,4 +10,11 @@ public class EnemyLvl4 extends Enemies{
         healthPoint = maxHP;
         damage = 50;
     }
+    boolean checkIfStop() {
+        if (posX > 120) {
+            speed = 0;
+            return true;
+        }
+        return false;
+    }
 }

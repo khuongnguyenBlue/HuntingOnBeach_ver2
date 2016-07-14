@@ -68,8 +68,10 @@ public class Player extends GameObject {
 
     @Override
     void draw(Graphics g) {
-        super.draw(g);
+        g.drawImage(sprite, posX-sprite.getWidth()*3/11, posY+sprite.getHeight()*2/10, null);
+        g.setColor(Color.green);
         g.drawString("$ "+money, 10, 400);
         g.drawString("HP: "+healthPoint, 10, 450);
+        g.setColor(Color.white);
     }
 }
