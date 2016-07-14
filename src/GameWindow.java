@@ -13,6 +13,7 @@ public class GameWindow extends Frame implements  Runnable{
     BufferedImage background;
     BufferedImage bufferImage;
     BufferedImage blankBackground, loadedItem;
+    BufferedImage mouseIcon;
     int mousepressedtime=0;
     int pressingornot=0;
     Player player=new Player();
@@ -28,17 +29,16 @@ public class GameWindow extends Frame implements  Runnable{
     public GameWindow() throws IOException {
         initGame();
     }
+
     void initGame(){
         this.setTitle("Hunting on beach");
         loadBackground();
         this.setSize(640,480);
         this.setVisible(true);
-        try
-        {
-            this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(new ImageIcon("Resource/Char/aim_icon.png").getImage(),new Point(0,0),"custom cursor"));
-
-        }catch(Exception e){}
-
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                cursorImg, new Point(0, 0), "blank cursor");
+        this.setCursor(blankCursor);
 
         //cam bien chuot
         this.addWindowListener(new WindowAdapter() {
@@ -56,9 +56,8 @@ public class GameWindow extends Frame implements  Runnable{
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                player.posX = e.getX()-64;
-                player.posY = e.getY()-64;
-
+                player.posX = e.getX()-25;
+                player.posY = e.getY()-25;
             }
         });
         addMouseListener(new MouseListener() {
@@ -113,6 +112,7 @@ public class GameWindow extends Frame implements  Runnable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         bufferBackground.drawImage(loadedItem, 0, 0, null);
 
 
@@ -128,6 +128,26 @@ public class GameWindow extends Frame implements  Runnable{
         //
 
     }
+
+    public void drawCursor(Graphics g,int posX, int posY) {
+        try
+        {
+            mouseIcon=ImageIO.read(new File("Resource/Char/aim_icon.png"));
+            mouseIcon = resizeicon(mouseIcon, 50, 50);
+        }catch(Exception e){}
+        g.drawImage(mouseIcon, posX, posY, null);
+    }
+    public static BufferedImage resizeicon(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
+    }
+
 
     void gameLoop(){
         while (true) {
@@ -154,7 +174,7 @@ public class GameWindow extends Frame implements  Runnable{
         enemy3.draw(bufferGraphics);
         enemy4.draw(bufferGraphics);
         player.draw(bufferGraphics);
-
+        drawCursor(bufferGraphics,player.posX,player.posY);
         g.drawImage(bufferImage, 0, 0, null);
 
     }
