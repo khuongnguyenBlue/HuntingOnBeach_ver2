@@ -12,8 +12,10 @@ import java.io.IOException;
 public class GameWindow extends Frame implements  Runnable{
     BufferedImage background;
     BufferedImage bufferImage;
-    BufferedImage blankBackground, loadedItem;
+
     BufferedImage mouseIcon;
+
+    Background drawedBackground= new Background();
     int mousepressedtime=0;
     int pressingornot=0;
     Player player=new Player();
@@ -32,7 +34,6 @@ public class GameWindow extends Frame implements  Runnable{
 
     void initGame(){
         this.setTitle("Hunting on beach");
-        loadBackground();
         this.setSize(640,480);
         this.setVisible(true);
         BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -102,21 +103,7 @@ public class GameWindow extends Frame implements  Runnable{
 
 
 
-    void loadBackground(){
-        if(blankBackground == null){
-            blankBackground = new BufferedImage(1280, 800, 1);
-        }
-        Graphics bufferBackground=blankBackground.getGraphics();
-        try {
-            loadedItem=ImageIO.read(new File("Resource/Background/background.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        bufferBackground.drawImage(loadedItem, 0, 0, null);
-
-
-    }
 
 
     void gameUpdate(){
@@ -167,13 +154,14 @@ public class GameWindow extends Frame implements  Runnable{
             bufferImage = new BufferedImage(640, 480, 1);
         }
         Graphics bufferGraphics = bufferImage.getGraphics();
-        bufferGraphics.drawImage(blankBackground, 0, 0, null);
-
+        bufferGraphics.drawImage(bufferImage, 0, 0, null);
+        drawedBackground.draw(bufferGraphics);
         enemy1.draw(bufferGraphics);
         enemy2.draw(bufferGraphics);
         enemy3.draw(bufferGraphics);
         enemy4.draw(bufferGraphics);
         player.draw(bufferGraphics);
+
         drawCursor(bufferGraphics,player.posX,player.posY);
         g.drawImage(bufferImage, 0, 0, null);
 
