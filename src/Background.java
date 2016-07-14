@@ -29,12 +29,7 @@ public class Background {
 //        }
 //        g.drawImage(loadedItem, 0, 0, null);
 
-//        try {
-//            loadedItem=ImageIO.read(new File("Resource/Background/image 132.png"));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        g.drawImage(loadedItem, 420, 200, null);
+
         try {
             loadedItem=ImageIO.read(new File("Resource/Background/image 1088.jpg"));
         } catch (IOException e) {
@@ -52,6 +47,13 @@ public class Background {
         }
         blankBackground.getGraphics().drawImage(loadedItem, 0, 0, null);
         blankBackground.getGraphics().drawImage(loadedItem,640,0,null);
+
+//        try {
+//            loadedItem=ImageIO.read(new File("Resource/Background/image 132.png"));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        blankBackground.getGraphics().drawImage(loadedItem, 420, 200, null);
 
 //        try {
 //            loadedItem=ImageIO.read(new File("Resource/Background/image 1096.png"));

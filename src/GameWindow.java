@@ -16,7 +16,7 @@ import java.io.IOException;
 public class GameWindow extends Frame implements Runnable{
     BufferedImage background;
     BufferedImage bufferImage;
-
+    BufferedImage yatchImage =ImageIO.read(new File("Resource/Background/image 132.png"));
     BufferedImage mouseIcon;
 
     Background drawnBackground= new Background();
@@ -178,6 +178,7 @@ public class GameWindow extends Frame implements Runnable{
         drawnBackground.draw();
         {bufferGraphics.drawImage(drawnBackground.blankBackground.getSubimage(countScreen%640,0,640,480),0,0,null);
         countScreen++;}
+        bufferGraphics.drawImage(yatchImage,400,200,null);
         enemy1.draw(bufferGraphics);
         enemy2.draw(bufferGraphics);
         enemy3.draw(bufferGraphics);
