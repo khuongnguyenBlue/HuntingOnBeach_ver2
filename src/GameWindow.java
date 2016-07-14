@@ -177,7 +177,7 @@ public class GameWindow extends Frame implements Runnable{
         bufferGraphics.drawImage(bufferImage, 0, 0, null);
         drawnBackground.draw();
         {bufferGraphics.drawImage(drawnBackground.blankBackground.getSubimage(countScreen%640,0,640,480),0,0,null);
-        countScreen++;}
+        countScreen+=5;}
         bufferGraphics.drawImage(yatchImage,400,200,null);
         enemy1.draw(bufferGraphics);
         enemy2.draw(bufferGraphics);
