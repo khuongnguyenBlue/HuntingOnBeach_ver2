@@ -56,8 +56,8 @@ public class GameWindow extends Frame implements  Runnable{
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                player.posX = e.getX() - 25;
-                player.posY = e.getY() - 25;
+                player.posX = e.getX()-64;
+                player.posY = e.getY()-64;
 
             }
         });
@@ -66,6 +66,10 @@ public class GameWindow extends Frame implements  Runnable{
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == 1) {
                     player.shot();
+                    enemy1.checkIfHit(e.getX(), e.getY());
+                    enemy2.checkIfHit(e.getX(), e.getY());
+                    enemy3.checkIfHit(e.getX(), e.getY());
+                    enemy4.checkIfHit(e.getX(), e.getY());
                 }
             }
 

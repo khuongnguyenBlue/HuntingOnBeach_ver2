@@ -7,13 +7,14 @@ import java.io.IOException;
  * Created by Laptop88 on 7/13/2016.
  */
 public class Enemies extends GameObject{
-    public int level;
+    public int damage;
     public int speed = 5;
     public int explosionType;
+    public int maxHP;
     int count = 0;
     Player player;
     public Enemies(String fileName, Player player){
-        posY = 200+(int)(Math.random()*200);
+        posY = 100+(int)(Math.random()*200);
         this.player = player;
         try {
             sprite = ImageIO.read(new File(fileName));
@@ -37,7 +38,7 @@ public class Enemies extends GameObject{
     }
     void exploded(){
         isAlive=false;
-        player.money += this.healthPoint;
+        player.money += this.maxHP;
         this.createExplosion();
     }
     Explosion createExplosion(){
@@ -65,7 +66,7 @@ public class Enemies extends GameObject{
         //tru mau
         count++;
         if (count==50){
-            player.healthPoint-=10;
+            player.healthPoint-=this.damage;
             count=0;
         }
     }

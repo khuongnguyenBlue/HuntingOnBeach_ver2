@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -7,24 +8,26 @@ import java.io.IOException;
  * Created by Laptop88 on 7/13/2016.
  */
 public class Player extends GameObject {
-    public int type;
+    public int type = 0;
     public int exp;
     public int money;
     public int checkGun;
     public int damage;
-    BufferedImage sprite2, sprite3;
+    BufferedImage sprite1, sprite2, sprite3;
     String fileName1 = "Resource/Player/Player_TYPE1.png";
     String fileName2 = "Resource/Player/Player_TYPE2.png";
     String fileName3 = "Resource/Player/Player_TYPE3.png";
     public Player(){
         try {
-            sprite = resize(ImageIO.read(new File(fileName1)),2);
+            sprite1 = resize(ImageIO.read(new File(fileName1)),2);
+            sprite = sprite1;
             sprite2 = resize(ImageIO.read(new File(fileName2)),2);
             sprite3 = resize(ImageIO.read(new File(fileName3)),2);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        healthPoint = 2000;
 
     }
     public void shot(){
@@ -40,7 +43,7 @@ public class Player extends GameObject {
     void changeGun(){
         type = checkGun%3;
         if (type==0){
-            sprite = sprite;
+            sprite = sprite1;
         }
         else if (type==1){
             sprite = sprite2;
@@ -63,4 +66,10 @@ public class Player extends GameObject {
         }
     }
 
+    @Override
+    void draw(Graphics g) {
+        super.draw(g);
+        g.drawString("$ "+money, 10, 400);
+        g.drawString("HP: "+healthPoint, 10, 450);
+    }
 }
