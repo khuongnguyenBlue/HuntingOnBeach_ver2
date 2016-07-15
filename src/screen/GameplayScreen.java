@@ -94,8 +94,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             if (player.usingItemTime > 10) {
                 player.usingItemTime = 0;
                 player.isUsingItem=false;
-//                player.spriteUsingItemPosX=300; player.spriteUsingItemPosY=400;
-//                player.grenadeIconPosX=300; player.grenadeIconPosY=350;
+                player.GrenadeUsingAnimation.posX=300; player.GrenadeUsingAnimation.posY=400;
+                player.GrenadeAnimation.posX=300; player.GrenadeAnimation.posY=350;
             }
         }
 

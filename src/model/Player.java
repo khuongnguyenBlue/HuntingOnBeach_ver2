@@ -20,8 +20,8 @@ public class Player extends GameObject {
     public int damage;
     public boolean isUsingItem=false;
     public int usingItemTime=0;
-//    public int spriteUsingItemPosX, spriteUsingItemPosY;
-//    public int grenadeIconPosX, grenadeIconPosY;
+    public int spriteUsingItemPosX, spriteUsingItemPosY;
+    public int grenadeIconPosX, grenadeIconPosY;
     public Animation shotAnimation,smokeAnimation;
     public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
     BufferedImage sprite1, sprite2, sprite3, spriteUsingGrenade, iconGrenade;
@@ -41,8 +41,8 @@ public class Player extends GameObject {
         }
         shotAnimation= new Animation("Resource/char/shot (",31,2);
         smokeAnimation=new Animation("Resource/char/smoke_shot (",31,5);
-        GrenadeUsingAnimation= new GrenadeUsingAnimation(spriteUsingGrenade,31,300,400,5,5);
-        GrenadeAnimation=new GrenadeUsingAnimation(iconGrenade,31,300,350,0,10);
+        GrenadeUsingAnimation= new GrenadeUsingAnimation(spriteUsingGrenade,31,300,350,5,5);
+        GrenadeAnimation=new GrenadeUsingAnimation(iconGrenade,31,300,400,0,20);
         healthPoint = 2000;
 //        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
 //        grenadeIconPosX=300; grenadeIconPosY=350;
@@ -112,11 +112,12 @@ public class Player extends GameObject {
     @Override
     public void update() {
         super.update();
-
-//        GrenadeUsingAnimation.posX-=5;
-//        GrenadeUsingAnimation.posY-=5;
-//        GrenadeAnimation.posY-=10;
-
+        if (!isUsingItem) {
+            spriteUsingItemPosX = 300;
+            spriteUsingItemPosY = 400;
+            grenadeIconPosX = 300;
+            grenadeIconPosY = 350;
+        }
 //        if (usingItemTime == 0) {
 //            isUsingItem = false;
 //            spriteUsingItemPosX = 300;
