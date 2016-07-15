@@ -129,12 +129,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                     }
                     break;
                 case 3:
-                    while (minesList.size()<6){
-                        minesList.add(new Mine(iconMine, 50 + (int) (Math.random()*130),150 + (int) (Math.random() * 200)));
+                    if (minesList.size()<6){
+                        minesList.add(new Mine(iconMine, 120 + (int) (Math.random()*100),150 + (int) (Math.random() * 200)));
                     }
                     for (Mine m: minesList){
                         for (Enemies e: enemiesList){
-                            if ((m.getRectAround().contains(e.getRectAround()))&&m.isAlive){
+                            if ((new Rectangle(e.posX, e.posY, e.sprite.getWidth(), e.sprite.getHeight()).contains(new Rectangle(m.posX, m.posY, m.sprite.getWidth(), m.sprite.getHeight()))&&m.isAlive)){
 
                                 e.isAlive=false;
                                 m.isAlive=false;
