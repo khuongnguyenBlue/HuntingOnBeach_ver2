@@ -8,6 +8,9 @@ import java.util.Stack;
 public class GameManager {
     private static GameManager sharePointer = new GameManager();
     private Stack<Screen> stackScreen;
+    private GameManager(){
+        stackScreen = new Stack<>();
+    }
     public static GameManager getInstance(){
         return sharePointer;
     }

@@ -82,7 +82,7 @@ public class Enemies extends GameObject {
     }
 
 
-    public void draw(Graphics g,boolean isAlive) {
+    public void draw(Graphics g) {
         if(isAlive) {
             g.drawImage(sprite, posX, posY, null);
             shotAnimation.draw(g, shotPosX, shotPosY);

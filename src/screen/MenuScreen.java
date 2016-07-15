@@ -12,14 +12,25 @@ import java.io.IOException;
  * Created by Laptop88 on 7/14/2016.
  */
 public class MenuScreen extends Screen implements MouseListener{
+    BufferedImage menuImage;
     BufferedImage playImage;
+    BufferedImage continueImage;
+    BufferedImage shopImage;
     BufferedImage aboutImage;
-    MouseEvent mouseEvent;
-
+    BufferedImage background;
+    Rectangle menuRect, playRect, continueRect, aboutRect;
     public MenuScreen(){
         try {
-            playImage = ImageIO.read(new File(""));
-            aboutImage = ImageIO.read(new File(""));
+            playImage = resize(ImageIO.read(new File("Resource/icon/play_icon.png")),2);
+            menuImage = ImageIO.read(new File("Resource/icon/menu_icon.png"));
+            aboutImage = resize(ImageIO.read(new File("Resource/icon/about_icon.png")),2);
+            shopImage = resize(ImageIO.read(new File("Resource/icon/shop_icon.png")),2);
+            continueImage = resize(ImageIO.read(new File("Resource/icon/continue_icon.png")),2);
+            background = ImageIO.read(new File("Resource/game_re/image 634.jpg"));
+            menuRect = new Rectangle((background.getWidth()-menuImage.getWidth())/2, background.getHeight()/2,menuImage.getWidth(), menuImage.getHeight());
+            playRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+30,playImage.getWidth(), playImage.getHeight());
+            continueRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+60,playImage.getWidth(), playImage.getHeight());
+            aboutRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+90,playImage.getWidth(),playImage.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,19 +39,26 @@ public class MenuScreen extends Screen implements MouseListener{
     @Override
     public void update() {
         //if click play push Gameplay Screen
+
         //if click about push About Screen
     }
 
     @Override
     public void draw(Graphics g) {
-        //ve man anh game
-        //nut play
-        //about
+        g.drawImage(background, 0, 0, null);
+        g.drawImage(menuImage, (int)menuRect.getX(), (int)menuRect.getY(), null);
+        g.drawImage(playImage, (int)playRect.getX(), (int)playRect.getY(), null);
+        g.drawImage(continueImage, (int)continueRect.getX(), (int)continueRect.getY(), null);
+        g.drawImage(aboutImage, (int)aboutRect.getX(), (int)aboutRect.getY(), null);
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if (playRect.contains(e.getX(),e.getY())){
+            GameplayScreen gameplayScreen = new GameplayScreen();
+            GameManager.getInstance().getStackScreen().push(gameplayScreen);
+        }
     }
 
     @Override

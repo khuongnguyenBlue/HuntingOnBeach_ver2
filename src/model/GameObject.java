@@ -14,7 +14,7 @@ public class GameObject {
 
     public int posX, posY;
     public int healthPoint;
-    public boolean isAlive = true;
+    boolean isAlive = true;
 
     public void draw(Graphics g){
         g.drawImage(sprite, posX, posY, null);
