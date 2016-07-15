@@ -51,6 +51,7 @@ public class InstructionScreen extends Screen implements MouseListener{
         GameplayScreen gameplayScreen = new GameplayScreen(gameWindow);
         gameWindow.addMouseListener(gameplayScreen);
         gameWindow.addMouseMotionListener(gameplayScreen);
+        gameWindow.addKeyListener(gameplayScreen);
         GameManager.getInstance().getStackScreen().push(gameplayScreen);
     }
 

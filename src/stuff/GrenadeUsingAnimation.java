@@ -8,24 +8,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Hoangelato on 14/07/2016.
+ * Created by Hoangelato on 16/07/2016.
  */
-public class Animation {
+public class GrenadeUsingAnimation {
     private ArrayList<BufferedImage> frames = new ArrayList<>();
     private int index = 0;
     private int countTime = 0;
     private int time;
-    public Animation(String imagestring,int time, int imageNumber){
+    public int posX, posY, speedX, speedY;
+    public GrenadeUsingAnimation(BufferedImage sprite,int time, int posX, int posY, int speedX, int speedY){
         this.time = time;
-        try {
-            for (int i = 1; i < imageNumber+1; i++){
-                frames.add(ImageIO.read(new File(imagestring+i+").png")));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+        this.posX = posX;
+        this.posY = posY;
+        this.speedX=speedX;
+        this.speedY=speedY;
 
+        for (int i = 1; i < 24; i++){
+                frames.add(sprite);
+            }
+
+
+    }
 
     public void update(){
         countTime += 17;
@@ -37,8 +40,12 @@ public class Animation {
                 index++;
             }
         }
+        posX-=speedX;
+        posY-=speedY;
     }
-    public void draw(Graphics g, int posX, int posY){
-        g.drawImage(frames.get(index), posX-frames.get(index).getHeight()/2, posY-frames.get(index).getWidth()/2, null);
+    public void draw(Graphics g){
+        g.drawImage(frames.get(index), posX, posY,null);
     }
+
+
 }

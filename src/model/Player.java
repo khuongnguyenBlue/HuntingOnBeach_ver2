@@ -1,6 +1,7 @@
 package model;
 
 import stuff.Animation;
+import stuff.GrenadeUsingAnimation;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,8 +18,13 @@ public class Player extends GameObject {
     public int money;
     public int checkGun;
     public int damage;
+    public boolean isUsingItem=false;
+    public int usingItemTime=0;
+//    public int spriteUsingItemPosX, spriteUsingItemPosY;
+//    public int grenadeIconPosX, grenadeIconPosY;
     public Animation shotAnimation,smokeAnimation;
-    BufferedImage sprite1, sprite2, sprite3;
+    public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
+    BufferedImage sprite1, sprite2, sprite3, spriteUsingGrenade, iconGrenade;
     String fileName1 = "Resource/Player/Player_TYPE1.png";
     String fileName2 = "Resource/Player/Player_TYPE2.png";
     String fileName3 = "Resource/Player/Player_TYPE3.png";
@@ -28,13 +34,18 @@ public class Player extends GameObject {
             sprite = sprite1;
             sprite2 = resize(ImageIO.read(new File(fileName2)),2);
             sprite3 = resize(ImageIO.read(new File(fileName3)),2);
-
+            spriteUsingGrenade= resize(ImageIO.read(new File("Resource/Player/Player_HAND.png")),2);
+            iconGrenade = ImageIO.read(new File("Resource/char/image 547.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         shotAnimation= new Animation("Resource/char/shot (",31,2);
         smokeAnimation=new Animation("Resource/char/smoke_shot (",31,5);
+        GrenadeUsingAnimation= new GrenadeUsingAnimation(spriteUsingGrenade,31,300,400,5,5);
+        GrenadeAnimation=new GrenadeUsingAnimation(iconGrenade,31,300,350,0,10);
         healthPoint = 2000;
+//        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
+//        grenadeIconPosX=300; grenadeIconPosY=350;
 
 
     }
@@ -63,28 +74,35 @@ public class Player extends GameObject {
             sprite = sprite3;
         }
     }
-    void useItem(int item){
-        if (item==1){
-            //nem luu dan, tat ca mat nua mau
-        }
-        else{
-            if (item==2){
-                //thuy loi
-            }
-            else {
-                //support plane xuat hien
+    public void useItem(int item){
+        if (usingItemTime>0) {
+            if (item == 1) {
+                //nem luu dan, tat ca mat nua mau
+
+            } else {
+                if (item == 2) {
+                    //thuy loi
+                } else {
+                    //support plane xuat hien
+                }
             }
         }
     }
 
     @Override
     public void draw(Graphics g) {
-        if (isShooting) {
-            shotAnimation.draw(g,posX-sprite.getWidth()*3/11+210, posY+sprite.getHeight()*2/10);
-            smokeAnimation.draw(g,posX+10,posY+30);
+        if (usingItemTime==0) {
+            System.out.println(usingItemTime);
+            if (isShooting) {
+                shotAnimation.draw(g, posX - sprite.getWidth() * 3 / 11 + 210, posY + sprite.getHeight() * 2 / 10);
+                smokeAnimation.draw(g, posX + 10, posY + 30);
+            }
+            g.drawImage(sprite, posX - sprite.getWidth() * 3 / 11, posY + sprite.getHeight() * 2 / 10, null);
+        }else {
+            System.out.println(usingItemTime);
+            GrenadeUsingAnimation.draw(g,300,400);
+            GrenadeAnimation.draw(g,300,350);
         }
-
-        g.drawImage(sprite, posX-sprite.getWidth()*3/11, posY+sprite.getHeight()*2/10, null);
         g.setColor(Color.green);
         g.drawString("$ "+money, 10, 420);
         g.drawString("HP: "+healthPoint, 10, 450);
@@ -94,6 +112,21 @@ public class Player extends GameObject {
     @Override
     public void update() {
         super.update();
+
+//        GrenadeUsingAnimation.posX-=5;
+//        GrenadeUsingAnimation.posY-=5;
+//        GrenadeAnimation.posY-=10;
+
+//        if (usingItemTime == 0) {
+//            isUsingItem = false;
+//            spriteUsingItemPosX = 300;
+//            spriteUsingItemPosY = 400;
+//            grenadeIconPosX = 300;
+//            grenadeIconPosY = 350;
+//        }
+//        spriteUsingItemPosX-=5*usingItemTime;
+//        spriteUsingItemPosY-=5*usingItemTime;
+//        grenadeIconPosY-=10*usingItemTime;
         if (healthPoint<=0){
             healthPoint=0;
             isAlive = false;

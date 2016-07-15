@@ -6,9 +6,7 @@ import stuff.GameWindow;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Laptop88 on 7/14/2016.
  */
-public class GameplayScreen extends Screen implements MouseMotionListener, MouseListener{
+public class GameplayScreen extends Screen implements MouseMotionListener, MouseListener, KeyListener{
     BufferedImage background;
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
@@ -81,7 +79,27 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
 
         }
-        player.shotAnimation.update();
+
+        if (player.isUsingItem) {
+            player.usingItemTime++;
+            player.GrenadeUsingAnimation.update();
+            player.GrenadeAnimation.update();
+            if (player.usingItemTime==10) {
+                for(Enemies e: enemiesList){
+                    if (e.isGoing) {
+                        e.isAlive = false;
+                    }
+                }
+            }
+            if (player.usingItemTime > 10) {
+                player.usingItemTime = 0;
+                player.isUsingItem=false;
+//                player.spriteUsingItemPosX=300; player.spriteUsingItemPosY=400;
+//                player.grenadeIconPosX=300; player.grenadeIconPosY=350;
+            }
+        }
+
+
         for (Enemies e: enemiesList){
             e.update();
 
@@ -161,5 +179,24 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             player.posX = e.getX() - 25;
             player.posY = e.getY() - 25;
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyChar()=='z')
+            //System.out.println("z");
+            player.isUsingItem=true;
+            player.useItem(1);
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

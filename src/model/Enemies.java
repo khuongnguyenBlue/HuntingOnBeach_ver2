@@ -15,7 +15,7 @@ public class Enemies extends GameObject {
     public int speed = 1 + (int) (Math.random() * 1);
     public int explosionType;
     public int maxHP;
-    boolean isGoing=false;
+    public boolean isGoing=false;
     int countShotTime = 0;
     int countGoingTime = 0;
     int explosiontime = 0;
