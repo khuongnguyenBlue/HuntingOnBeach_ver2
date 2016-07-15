@@ -66,6 +66,7 @@ public class Enemies extends GameObject {
             shotPosX+= speed;
             if (checkIfStop()) {
                 shot();
+
             }
         }
         if (isAlive==false){
@@ -97,15 +98,15 @@ public class Enemies extends GameObject {
 
 
     public void draw(Graphics g) {
-        if(isAlive && isGoing) {
+        if(isAlive&&isGoing) {
             g.drawImage(sprite, posX, posY, null);
-            shotAnimation.draw(g, shotPosX, shotPosY);
+            if(checkIfStop()) shotAnimation.draw(g, shotPosX, shotPosY);
         }
         else {
-            if (explosiontime <= 20)
+            if (explosiontime <= 30&&checkIfStop())
                 explosionAnimation.draw(g, posX + sprite.getWidth() / 2, posY - 30);
         }
-        if (explosiontime==0){
+        if (explosiontime==0&&isGoing){
             g.setColor(Color.white);
             g.drawString("" + healthPoint, posX - 5, posY);
             g.setColor(Color.orange);

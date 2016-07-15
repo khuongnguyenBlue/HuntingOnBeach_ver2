@@ -36,6 +36,7 @@ public class Player extends GameObject {
         smokeAnimation=new Animation("Resource/char/smoke_shot (",31,5);
         healthPoint = 2000;
 
+
     }
     public boolean isShooting=false;
     public void shot(){
@@ -80,7 +81,7 @@ public class Player extends GameObject {
     public void draw(Graphics g) {
         if (isShooting) {
             shotAnimation.draw(g,posX-sprite.getWidth()*3/11+210, posY+sprite.getHeight()*2/10);
-            smokeAnimation.draw(g,posX,posY+30);
+            smokeAnimation.draw(g,posX+10,posY+30);
         }
 
         g.drawImage(sprite, posX-sprite.getWidth()*3/11, posY+sprite.getHeight()*2/10, null);
