@@ -77,6 +77,7 @@ public class Enemies extends GameObject {
         count++;
         if (count == 50) {
             player.healthPoint -= this.damage;
+            player.update();
             count = 0;
         }
     }

@@ -84,4 +84,13 @@ public class Player extends GameObject {
         g.drawString("HP: "+healthPoint, 10, 450);
         g.setColor(Color.white);
     }
+
+    @Override
+    public void update() {
+        super.update();
+        if (healthPoint<=0){
+            healthPoint=0;
+            isAlive = false;
+        }
+    }
 }

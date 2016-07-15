@@ -2,6 +2,7 @@ package screen;
 
 import model.*;
 import stuff.BackgroundBuild;
+import stuff.GameWindow;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,13 +31,15 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     Enemies enemy2= new EnemyLvl2(player);
     Enemies enemy3= new EnemyLvl3(player);
     Enemies enemy4= new EnemyLvl4(player);
-    public GameplayScreen(){
+    GameWindow gameWindow;
+    public GameplayScreen(GameWindow gameWindow){
         try {
             yatchImage= ImageIO.read(new File("Resource/Background/image 132.png"));
             shipImage=ImageIO.read(new File("Resource/Background/image 1134.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.gameWindow = gameWindow;
 
 
     }
@@ -67,6 +70,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         enemy2.update();
         enemy3.update();
         enemy4.update();
+        if (player.isAlive==false){
+            GameOverScreen gameOverScreen = new GameOverScreen();
+            GameManager.getInstance().getStackScreen().push(gameOverScreen);
+            gameWindow.addMouseListener(gameOverScreen);
+
+        }
     }
 
     @Override
