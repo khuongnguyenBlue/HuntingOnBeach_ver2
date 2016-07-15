@@ -41,9 +41,9 @@ public class InstructionScreen extends Screen implements MouseListener{
     @Override
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
-        g.drawImage(instruction1, 0, 0, null);
-        g.drawImage(instruction2, 0, 0, null);
-        g.drawImage(guideBox, 0, 0, null);
+        g.drawImage(instruction1, 400, 70, null);
+        g.drawImage(instruction2, 150, 300, null);
+        g.drawImage(guideBox, 100, 100, null);
     }
 
     @Override
