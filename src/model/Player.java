@@ -17,7 +17,7 @@ public class Player extends GameObject {
     public int money;
     public int checkGun;
     public int damage;
-    public Animation shotAnimation;
+    public Animation shotAnimation,smokeAnimation;
     BufferedImage sprite1, sprite2, sprite3;
     String fileName1 = "Resource/Player/Player_TYPE1.png";
     String fileName2 = "Resource/Player/Player_TYPE2.png";
@@ -33,6 +33,7 @@ public class Player extends GameObject {
             e.printStackTrace();
         }
         shotAnimation= new Animation("Resource/char/shot (",31,2);
+        smokeAnimation=new Animation("Resource/char/smoke_shot (",31,5);
         healthPoint = 2000;
 
     }
@@ -77,7 +78,11 @@ public class Player extends GameObject {
 
     @Override
     public void draw(Graphics g) {
-        if (isShooting) shotAnimation.draw(g,posX,posY);
+        if (isShooting) {
+            shotAnimation.draw(g,posX-sprite.getWidth()*3/11+210, posY+sprite.getHeight()*2/10);
+            smokeAnimation.draw(g,posX,posY+30);
+        }
+
         g.drawImage(sprite, posX-sprite.getWidth()*3/11, posY+sprite.getHeight()*2/10, null);
         g.setColor(Color.green);
         g.drawString("$ "+money, 10, 420);

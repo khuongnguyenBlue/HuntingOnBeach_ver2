@@ -71,7 +71,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     @Override
     public void update() {
         drawnBackground.update();
-
+        player.shotAnimation.update();
+        player.smokeAnimation.update();
         if (isPressing) {
             player.shot();
             for (Enemies e: enemiesList){

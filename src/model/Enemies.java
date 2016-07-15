@@ -102,7 +102,7 @@ public class Enemies extends GameObject {
             shotAnimation.draw(g, shotPosX, shotPosY);
         }
         else {
-            if (explosiontime <= 30)
+            if (explosiontime <= 20)
                 explosionAnimation.draw(g, posX + sprite.getWidth() / 2, posY - 30);
         }
         if (explosiontime==0){
