@@ -81,22 +81,34 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         }
 
         if (player.isUsingItem) {
-            player.usingItemTime++;
-            player.GrenadeUsingAnimation.update();
-            player.GrenadeAnimation.update();
-            if (player.usingItemTime==10) {
-                for(Enemies e: enemiesList){
-                    if (e.isGoing) {
-                        e.isAlive = false;
+            switch (player.itemType){
+                case 1:
+                    player.usingItemTime++;
+                    player.GrenadeUsingAnimation.update();
+                    player.GrenadeAnimation.update();
+                    if (player.usingItemTime==10) {
+                        for(Enemies e: enemiesList){
+                            if (e.isGoing) {
+                                e.isAlive = false;
+                            }
+                        }
                     }
-                }
+                    if (player.usingItemTime > 10) {
+                        player.usingItemTime = 0;
+                        player.isUsingItem=false;
+                        player.GrenadeUsingAnimation.posX=300; player.GrenadeUsingAnimation.posY=400;
+                        player.GrenadeAnimation.posX=300; player.GrenadeAnimation.posY=350;
+                    }
+                    break;
+                case 2:
+                    player.usingItemTime++;
+
+                    break;
+                case 3:
+                    break;
+                default: break;
             }
-            if (player.usingItemTime > 10) {
-                player.usingItemTime = 0;
-                player.isUsingItem=false;
-                player.GrenadeUsingAnimation.posX=300; player.GrenadeUsingAnimation.posY=400;
-                player.GrenadeAnimation.posX=300; player.GrenadeAnimation.posY=350;
-            }
+
         }
 
 
@@ -183,20 +195,18 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar()=='z')
-            //System.out.println("z");
-            player.isUsingItem=true;
-            player.useItem(1);
+
+        player.useItem(e.getKeyChar());
 
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }

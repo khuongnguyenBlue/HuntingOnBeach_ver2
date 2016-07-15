@@ -5,6 +5,8 @@ import stuff.GrenadeUsingAnimation;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.io.IOException;
  */
 public class Player extends GameObject {
     public int type = 0;
+    public int itemType;
     public int exp;
     public int money;
     public int checkGun;
@@ -74,21 +77,25 @@ public class Player extends GameObject {
             sprite = sprite3;
         }
     }
-    public void useItem(int item){
-        if (usingItemTime>0) {
-            if (item == 1) {
-                //nem luu dan, tat ca mat nua mau
+    public void useItem(char c){
+        switch (c){
+            case 'z':
+                isUsingItem=true;
+                itemType = 1;
+                break;
+            case 'x':
+                isUsingItem=true;
+                itemType = 2;
+                break;
+            case 'c':
+                isUsingItem=true;
+                itemType = 3;
+                break;
+            default:
+                break;
 
-            } else {
-                if (item == 2) {
-                    //thuy loi
-                } else {
-                    //support plane xuat hien
-                }
-            }
         }
     }
-
     @Override
     public void draw(Graphics g) {
         if (usingItemTime==0) {
@@ -112,12 +119,13 @@ public class Player extends GameObject {
     @Override
     public void update() {
         super.update();
-        if (!isUsingItem) {
-            spriteUsingItemPosX = 300;
-            spriteUsingItemPosY = 400;
-            grenadeIconPosX = 300;
-            grenadeIconPosY = 350;
-        }
+
+//        if (!isUsingItem) {
+//            spriteUsingItemPosX = 300;
+//            spriteUsingItemPosY = 400;
+//            grenadeIconPosX = 300;
+//            grenadeIconPosY = 350;
+//        }
 //        if (usingItemTime == 0) {
 //            isUsingItem = false;
 //            spriteUsingItemPosX = 300;
