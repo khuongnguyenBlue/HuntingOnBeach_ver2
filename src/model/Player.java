@@ -100,8 +100,8 @@ public class Player extends GameObject {
             g.drawImage(sprite, posX - sprite.getWidth() * 3 / 11, posY + sprite.getHeight() * 2 / 10, null);
         }else {
             System.out.println(usingItemTime);
-            GrenadeUsingAnimation.draw(g,300,400);
-            GrenadeAnimation.draw(g,300,350);
+            GrenadeUsingAnimation.draw(g);
+            GrenadeAnimation.draw(g);
         }
         g.setColor(Color.green);
         g.drawString("$ "+money, 10, 420);
