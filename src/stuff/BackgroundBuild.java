@@ -9,10 +9,9 @@ import java.io.IOException;
  * Created by Hoangelato on 14/07/2016.
  */
 public class BackgroundBuild {
-    BufferedImage blankBackground;
-    BufferedImage skyBackground, cityBackground, waterBackground;
+    public BufferedImage blankBackground;
+    public BufferedImage skyBackground, cityBackground, waterBackground;
 
-    Animation explosion;
     public BackgroundBuild(){
         if(blankBackground == null){
             blankBackground = new BufferedImage(1280, 480, 1);
@@ -25,10 +24,9 @@ public class BackgroundBuild {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        explosion = new Animation("Resource/char/exploding (",110, 110,31,9);
     }
     public void update(){
-        explosion.update();
+
     }
 
     public void draw(){
@@ -40,7 +38,6 @@ public class BackgroundBuild {
         blankBackground.getGraphics().drawImage(skyBackground,640,0,null);
         blankBackground.getGraphics().drawImage(cityBackground, 0, 75,null);
         blankBackground.getGraphics().drawImage(cityBackground, 640, 75,null);
-//        explosion.draw(blankBackground.getGraphics(),100,100);
     };
 
 }

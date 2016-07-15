@@ -46,6 +46,7 @@ public class Enemies extends GameObject{
     Explosion createExplosion(){
 
         return new Explosion (posX, posY, this.explosionType);
+
     }
 
     @Override

@@ -1,5 +1,7 @@
 package model;
 
+import stuff.Animation;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +17,7 @@ public class Player extends GameObject {
     public int money;
     public int checkGun;
     public int damage;
+    public Animation shotAnimation;
     BufferedImage sprite1, sprite2, sprite3;
     String fileName1 = "Resource/Player/Player_TYPE1.png";
     String fileName2 = "Resource/Player/Player_TYPE2.png";
@@ -29,11 +32,14 @@ public class Player extends GameObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        shotAnimation= new Animation("Resource/char/shot (",31,2);
         healthPoint = 2000;
 
     }
+    public boolean isShooting=false;
     public void shot(){
-        System.out.println("shot");
+        //System.out.println("shot");
+        isShooting=true;
         if (type==0){
             damage=3;
         }
@@ -41,6 +47,7 @@ public class Player extends GameObject {
             damage = 5;
         }
         else damage = 8;
+
     }
     void changeGun(){
         type = checkGun%3;
@@ -70,6 +77,7 @@ public class Player extends GameObject {
 
     @Override
     public void draw(Graphics g) {
+        if (isShooting) shotAnimation.draw(g,posX,posY);
         g.drawImage(sprite, posX-sprite.getWidth()*3/11, posY+sprite.getHeight()*2/10, null);
         g.setColor(Color.green);
         g.drawString("$ "+money, 10, 400);

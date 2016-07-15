@@ -15,7 +15,7 @@ public class Animation {
     private int index = 0;
     private int countTime = 0;
     private int time;
-    public Animation(String imagestring,int w, int h,int time, int imageNumber){
+    public Animation(String imagestring,int time, int imageNumber){
         this.time = time;
         try {
             for (int i = 1; i < imageNumber+1; i++){
