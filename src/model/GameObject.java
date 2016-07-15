@@ -10,7 +10,7 @@ import java.io.IOException;
  * Created by Laptop88 on 7/13/2016.
  */
 public class GameObject {
-    BufferedImage sprite;
+    public BufferedImage sprite;
 
     public int posX, posY;
     public int healthPoint;

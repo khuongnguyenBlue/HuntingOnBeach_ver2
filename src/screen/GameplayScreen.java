@@ -19,7 +19,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage background;
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
-    BufferedImage mouseIcon;
+    BufferedImage mouseIcon,iconMine;
     GameLevel gameLevel;
     EnemyFactory enemyFactory;
     BackgroundBuild drawnBackground= new BackgroundBuild();
@@ -28,12 +28,13 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     Player player=new Player();
 
     ArrayList<Enemies>  enemiesList = new ArrayList<>();
-
+    ArrayList<Mine> minesList= new ArrayList<>();
     GameWindow gameWindow;
     public GameplayScreen(GameWindow gameWindow){
         try {
             yatchImage= ImageIO.read(new File("Resource/Background/image 132.png"));
             shipImage=ImageIO.read(new File("Resource/Background/image 1134.png"));
+            iconMine = ImageIO.read(new File("Resource/char/image 36.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,10 +102,47 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                     }
                     break;
                 case 2:
-                    player.usingItemTime++;
+                    player.usingNetTime++;
+                    if(player.NetAnimation.posX>=50) {
+//                        player.NetAnimation.speedX = 0;
+                        player.NetAnimation.update();
+                    }
+                        if (player.usingNetTime==10) {
 
+                        for(Enemies e: enemiesList){
+
+                            e.speed=-1;
+
+                        }
+
+                    }
+                    if (player.usingNetTime > 50) {
+                        player.usingNetTime = 0;
+                        player.isUsingItem=false;
+                        for(Enemies e: enemiesList){
+
+                            e.speed=1 + (int) (Math.random() * 1);
+
+                        }
+                        player.NetAnimation.posX=200; player.NetAnimation.posY=150;
+
+                    }
                     break;
                 case 3:
+                    while (minesList.size()<6){
+                        minesList.add(new Mine(iconMine, 50 + (int) (Math.random()*130),150 + (int) (Math.random() * 200)));
+                    }
+                    for (Mine m: minesList){
+                        for (Enemies e: enemiesList){
+                            if ((m.getRectAround().contains(e.getRectAround()))&&m.isAlive){
+
+                                e.isAlive=false;
+                                m.isAlive=false;
+                            }
+                        }
+                    }
+
+
                     break;
                 default: break;
             }
@@ -115,6 +153,10 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         for (Enemies e: enemiesList){
             e.update();
 
+        }
+
+        for (Mine m:minesList){
+            m.update();
         }
 
         if (player.isAlive==false){
@@ -140,6 +182,11 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
         }
+        for (Mine m: minesList){
+            if (m.isAlive) {
+                System.out.println("1");
+                m.draw(bufferGraphics);
+        }}
         player.draw(bufferGraphics);
         g.drawImage(bufferImage, 0, 0, null);
 
