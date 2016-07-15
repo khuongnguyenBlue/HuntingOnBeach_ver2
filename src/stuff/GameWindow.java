@@ -25,11 +25,15 @@ public class GameWindow extends Frame implements Runnable{
     public GameWindow() throws IOException {
         initGame();
     }
+    void initCursor(){
+        this.setCursor(this.getToolkit().createCustomCursor(new BufferedImage(3, 3, BufferedImage.TYPE_INT_ARGB), new Point(0, 0),"null"));
+    }
 
     void initGame(){
         this.setTitle("Hunting on beach");
         this.setSize(640,480);
         this.setVisible(true);
+        initCursor();
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -38,9 +42,10 @@ public class GameWindow extends Frame implements Runnable{
             }
         });
 
-        MenuScreen menuScreen = new MenuScreen();
+        MenuScreen menuScreen = new MenuScreen(this);
         this.addMouseListener(menuScreen);
         GameManager.getInstance().getStackScreen().push(menuScreen);
+
     }
     public void drawCursor(Graphics g,int posX, int posY) {
         try {

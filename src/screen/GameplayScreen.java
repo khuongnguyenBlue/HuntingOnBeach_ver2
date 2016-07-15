@@ -19,6 +19,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage background;
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
+    BufferedImage mouseIcon;
 
 
     BackgroundBuild drawnBackground= new BackgroundBuild();
@@ -56,14 +57,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         if (isPressing) {
             player.shot();
-
             enemy1.checkIfHit(player.posX+25, player.posY+25);
             enemy2.checkIfHit(player.posX+25, player.posY+25);
             enemy3.checkIfHit(player.posX+25, player.posY+25);
             enemy4.checkIfHit(player.posX+25, player.posY+25);
         }
         player.shotAnimation.update();
-        player.smokeAnimation.update();
         enemy1.update();
         enemy2.update();
         enemy3.update();
