@@ -40,10 +40,10 @@ public class GameWindow extends Frame implements Runnable{
         this.setTitle("Hunting on beach");
         this.setSize(640,480);
         this.setVisible(true);
-//        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-//        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-//                cursorImg, new Point(0, 0), "blank cursor");
-//        this.setCursor(blankCursor);
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+                cursorImg, new Point(0, 0), "blank cursor");
+        this.setCursor(blankCursor);
 
         try {
             yatchImage=ImageIO.read(new File("Resource/Background/image 132.png"));
