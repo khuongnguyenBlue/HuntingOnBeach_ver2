@@ -15,12 +15,15 @@ public class Enemies extends GameObject {
     public int speed = 1 + (int) (Math.random() * 1);
     public int explosionType;
     public int maxHP;
-    int count = 0;
+    boolean isGoing=false;
+    int countShotTime = 0;
+    int countGoingTime = 0;
     int explosiontime = 0;
+    int time;
     Player player;
     Animation explosionAnimation,shotAnimation;
     protected int shotPosX, shotPosY;
-    public Enemies(String fileName, Player player) {
+    public Enemies(String fileName, Player player,int time) {
         posY = 150 + (int) (Math.random() * 200);
         this.player = player;
         try {
@@ -30,6 +33,7 @@ public class Enemies extends GameObject {
         }
         explosionAnimation = new Animation("Resource/char/exploding (", 31, 9);
         shotAnimation =new Animation("Resource/char/enemy_shot (",31,3);
+        this.time = time;
     }
 
     public void checkIfHit(int x, int y) {
@@ -44,6 +48,7 @@ public class Enemies extends GameObject {
             if (healthPoint <= 0) {
                 healthPoint = 0;
                 isAlive = false;
+                isGoing = false;
                 player.money += this.maxHP;
             }
         }
@@ -52,14 +57,22 @@ public class Enemies extends GameObject {
     @Override
     public void update() {
         super.update();
-        if (isAlive) {
+        countGoingTime++;
+        if (countGoingTime>time){
+            isGoing=true;
+        }
+        if (isAlive && isGoing) {
             posX += speed;
             shotPosX+= speed;
             if (checkIfStop()) {
                 shot();
             }
-        } else explosiontime++;
-        explosionAnimation.update();
+        }
+        if (isAlive==false){
+            explosiontime++;
+            explosionAnimation.update();
+        }
+
         shotAnimation.update();
     }
 
@@ -74,17 +87,17 @@ public class Enemies extends GameObject {
     void shot() {
         //tao hieu ung ban dan
         //tru mau
-        count++;
-        if (count == 50) {
+        countShotTime++;
+        if (countShotTime == 50) {
             player.healthPoint -= this.damage;
             player.update();
-            count = 0;
+            countShotTime = 0;
         }
     }
 
 
     public void draw(Graphics g) {
-        if(isAlive) {
+        if(isAlive && isGoing) {
             g.drawImage(sprite, posX, posY, null);
             shotAnimation.draw(g, shotPosX, shotPosY);
         }

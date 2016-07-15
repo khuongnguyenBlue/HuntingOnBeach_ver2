@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Laptop88 on 7/14/2016.
@@ -21,16 +22,15 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon;
-
-
+    GameLevel gameLevel;
+    EnemyFactory enemyFactory;
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
     Player player=new Player();
-    Enemies enemy1= new EnemyLvl1(player);
-    Enemies enemy2= new EnemyLvl2(player);
-    Enemies enemy3= new EnemyLvl3(player);
-    Enemies enemy4= new EnemyLvl4(player);
+
+    ArrayList<Enemies>  enemiesList = new ArrayList<>();
+
     GameWindow gameWindow;
     public GameplayScreen(GameWindow gameWindow){
         try {
@@ -40,6 +40,20 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             e.printStackTrace();
         }
         this.gameWindow = gameWindow;
+        GameLevel gameLevel = new GameLevel();
+        enemyFactory = new EnemyFactory(player);
+        for (int i=0; i<gameLevel.numOfLv1(); i++){
+            enemiesList.add(enemyFactory.getEnemy(1));
+        }
+        for (int i=0; i<gameLevel.numOfLv2(); i++){
+            enemiesList.add(enemyFactory.getEnemy(2));
+        }
+        for (int i=0; i<gameLevel.numOfLv3(); i++){
+            enemiesList.add(enemyFactory.getEnemy(3));
+        }
+        for (int i=0; i<gameLevel.numOfLv4(); i++){
+            enemiesList.add(enemyFactory.getEnemy(4));
+        }
 
 
     }
@@ -60,16 +74,18 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         if (isPressing) {
             player.shot();
-            enemy1.checkIfHit(player.posX+25, player.posY+25);
-            enemy2.checkIfHit(player.posX+25, player.posY+25);
-            enemy3.checkIfHit(player.posX+25, player.posY+25);
-            enemy4.checkIfHit(player.posX+25, player.posY+25);
+            for (Enemies e: enemiesList){
+                e.checkIfHit(player.posX+25, player.posY+25);
+            }
+
+
         }
         player.shotAnimation.update();
-        enemy1.update();
-        enemy2.update();
-        enemy3.update();
-        enemy4.update();
+        for (Enemies e: enemiesList){
+            e.update();
+
+        }
+
         if (player.isAlive==false){
             GameOverScreen gameOverScreen = new GameOverScreen();
             GameManager.getInstance().getStackScreen().push(gameOverScreen);
@@ -90,10 +106,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             countScreen+=5;}
         bufferGraphics.drawImage(yatchImage,400,200,null);
         bufferGraphics.drawImage(shipImage,0,350,null);
-        enemy1.draw(bufferGraphics);
-        enemy2.draw(bufferGraphics);
-        enemy3.draw(bufferGraphics);
-        enemy4.draw(bufferGraphics);
+        for (Enemies e:enemiesList){
+            e.draw(bufferGraphics);
+        }
         player.draw(bufferGraphics);
         g.drawImage(bufferImage, 0, 0, null);
 

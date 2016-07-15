@@ -6,11 +6,11 @@ package model;
 public class EnemyLvl4 extends Enemies{
     public static final String FILE_NAME = "Resource/Enemies/EnemyLv4.png";
 
-    public EnemyLvl4(Player player) {
-        super(FILE_NAME, player);
+    public EnemyLvl4(Player player, int time) {
+        super(FILE_NAME, player, time);
         shotPosX=posX+121;
         shotPosY=posY+6;
-        maxHP = 600;
+        maxHP = 300;
         healthPoint = maxHP;
         damage = 50;
     }
