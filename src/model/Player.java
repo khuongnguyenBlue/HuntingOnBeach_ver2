@@ -51,6 +51,11 @@ public class Player extends GameObject {
         GrenadeUsingAnimation= new GrenadeUsingAnimation(spriteUsingGrenade,31,300,350,5,5);
         GrenadeAnimation=new GrenadeUsingAnimation(iconGrenade,31,300,400,0,20);
         NetAnimation=new GrenadeUsingAnimation(iconNet,31,200,150,10,0);
+        maxHP = 2000;
+
+        healthPoint = maxHP;
+//        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
+//        grenadeIconPosX=300; grenadeIconPosY=350;
 
 
         healthPoint = 2000;
