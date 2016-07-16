@@ -1,6 +1,7 @@
 package screen;
 
 import model.*;
+import stuff.Animation;
 import stuff.BackgroundBuild;
 import stuff.GameWindow;
 import sun.audio.AudioData;
@@ -27,7 +28,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon,iconMine;
-    BufferedImage C_icon,X_icon,Z_icon, QuantityBoard_icon, MoneyBoard_icon,spriteSupporter1;
+    BufferedImage C_icon,X_icon,Z_icon, QuantityBoard_icon, MoneyBoard_icon;
+    BufferedImage spriteSupporter1,spriteSupporter2;
+    Animation shotAnimation;
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
@@ -52,9 +55,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             QuantityBoard_icon = ImageIO.read(new File("Resource/char/QuantityBoard_icon.png"));
             MoneyBoard_icon = ImageIO.read(new File("Resource/char/MoneyBoard_icon.png"));
             spriteSupporter1= ImageIO.read(new File("Resource/Player/image 1068.png"));
+            spriteSupporter2= resize(ImageIO.read(new File("Resource/Player/image 1074.png")),2);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        shotAnimation= new Animation("Resource/char/shot (",31,2);
         this.gameWindow = gameWindow;
         enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
         minesList = new ArrayList<>();
@@ -203,7 +209,24 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
                         break;
                     case 5:
+                        player.usingSupporter2Time++;
                         Supporter2 supporter2 = new Supporter2(player);
+                        supporter2.update();
+                        if(player.usingSupporter2Time>0){
+                            for (Enemies e:enemiesList) {
+                                if (e.isAlive && e.isGoing) {
+                                    e.healthPoint -= supporter2.damage;
+                                    if (e.healthPoint < 0) {
+                                        e.healthPoint = 0;
+                                        e.isAlive = false;
+                                    }
+                                }
+                            }
+                        }
+                        if(player.usingSupporter2Time>120) {
+                            player.usingSupporter2Time=0;
+                            player.isUsingItem=false;
+                        }
                         break;
                     case 6:
                         Supporter3 supporter3 = new Supporter3(player);
@@ -228,6 +251,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             gameWindow.addMouseListener(gameOverScreen);
 
         }
+        shotAnimation.update();
     }
 
     @Override
@@ -249,10 +273,21 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 402,null);
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 431,null);
         bufferGraphics.drawImage(MoneyBoard_icon, 10, 355,null);
+
         if(player.usingSupporter1Time>0) {
             if (640-5*player.usingSupporter1Time>=320){
-            bufferGraphics.drawImage(spriteSupporter1,640-5*player.usingSupporter1Time, 50,null);
-        }}
+                bufferGraphics.drawImage(spriteSupporter1,640-5*player.usingSupporter1Time, 50,null);
+                shotAnimation.draw(g,640-5*player.usingSupporter1Time+154, 107);
+            }
+        }
+
+        if(player.usingSupporter2Time>0) {
+            if (640-5*player.usingSupporter2Time>=320){
+                bufferGraphics.drawImage(spriteSupporter2,640-5*player.usingSupporter2Time, 50,null);
+                shotAnimation.draw(g,640-5*player.usingSupporter1Time+234/2, 50+136/2);
+            }
+        }
+
 
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
