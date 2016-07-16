@@ -38,7 +38,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     EnemyFactory enemyFactory = new EnemyFactory(player);
     public int numOfDeath;
     public int wonTimeCount;
-
+    BufferedImage health_and_armor;
     ArrayList<Enemies>  enemiesList;
     ArrayList<Mine> minesList;
     GameWindow gameWindow;
@@ -57,6 +57,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             spriteSupporter1= ImageIO.read(new File("Resource/Player/image 1068.png"));
             spriteSupporter2= resize(ImageIO.read(new File("Resource/Player/image 1074.png")),2);
 
+            health_and_armor = ImageIO.read(new File("Resource/char/Health_and_ammo_board.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,7 +94,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         return dimg;
     }
-
+    int timeReload=0;
     @Override
     public void update() {
         if (numOfDeath==enemiesList.size()){
@@ -105,15 +106,25 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
             minesList = new ArrayList<Mine>();
         }
+
         else {
             //System.out.println(numOfDeath);
             numOfDeath = 0;
             drawnBackground.update();
             player.shotAnimation.update();
             player.smokeAnimation.update();
-            if (isPressing) {
+            if (isPressing && player.armor>0) {
+                player.isShooting = true;
+
                 player.shot();
-                for (Enemies e : enemiesList) {
+                player.armor--;
+            }
+            if(player.armor==0) {
+                player.isShooting = false;
+                timeReload++;
+            }
+            if(timeReload==10) player.armor=player.maxArmor;
+            for (Enemies e : enemiesList) {
                     e.checkIfHit(player.posX + 25, player.posY + 25);
                 }
 
@@ -243,8 +254,6 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
 
 
-        }
-
         if (player.isAlive==false){
             GameOverScreen gameOverScreen = new GameOverScreen();
             GameManager.getInstance().getStackScreen().push(gameOverScreen);
@@ -273,6 +282,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 402,null);
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 431,null);
         bufferGraphics.drawImage(MoneyBoard_icon, 10, 355,null);
+        bufferGraphics.drawImage(health_and_armor, 10, 400, null);
 
         if(player.usingSupporter1Time>0) {
             if (640-5*player.usingSupporter1Time>=320){

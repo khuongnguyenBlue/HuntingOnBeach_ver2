@@ -20,7 +20,8 @@ public class Player extends GameObject {
     public int numOfNet = 2;
     public int numOfMine = 1;
     public int numOfGrenade = 1;
-
+    public int maxArmor;
+    public int armor;
     public int exp;
     public int money;
     public int checkGun;
@@ -30,7 +31,6 @@ public class Player extends GameObject {
     public Animation shotAnimation,smokeAnimation;
     public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
     public GrenadeUsingAnimation NetAnimation;
-
     BufferedImage sprite1, sprite2, sprite3;
     BufferedImage spriteUsingGrenade, iconGrenade;
     BufferedImage iconNet;
@@ -42,7 +42,7 @@ public class Player extends GameObject {
             sprite1 = resize(ImageIO.read(new File(fileName1)),2);
             sprite = sprite1;
             sprite2 = resize(ImageIO.read(new File(fileName2)),2);
-            sprite3 = resize(ImageIO.read(new File(fileName3)),2);
+            sprite3 = resize(ImageIO.read(new File(fileName3)),1);
             spriteUsingGrenade= resize(ImageIO.read(new File("Resource/Player/Player_HAND.png")),2);
             iconGrenade = ImageIO.read(new File("Resource/char/image 547.png"));
             iconNet = resizeicon(ImageIO.read(new File("Resource/char/image 956.png")),200,200);
@@ -60,7 +60,16 @@ public class Player extends GameObject {
         healthPoint = maxHP;
 //        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
 //        grenadeIconPosX=300; grenadeIconPosY=350;
-
+        switch (type){
+            case 0: maxArmor= 10;
+                break;
+            case 1: maxArmor=20;
+                break;
+            case 2: maxArmor=30;
+                break;
+            default:break;
+        }
+        armor=maxArmor;
 
         healthPoint = 2000;
 
@@ -78,41 +87,52 @@ public class Player extends GameObject {
     }
     public boolean isShooting=false;
     public void shot(){
-        isShooting=true;
+
         if (type==0){
             damage=3;
+            //maxArmor = 10;
+
         }
         else if (type==1) {
             damage = 5;
+            //maxArmor = 20;
+
         }
-        else damage = 8;
+        else {
+            damage = 8;
+            //maxArmor = 30;
+
+        }
 
     }
     void changeGun(){
         type = checkGun%3;
-        if (type==0){
-            sprite = sprite1;
-        }
-        else if (type==1){
-            sprite = sprite2;
-        }
-        else {
-            sprite = sprite3;
-        }
+
     }
     public void useItem(char c){
         switch (c){
             case 'z':
-                isUsingItem=true;
-                itemType = 1;
+                if (numOfGrenade>0){
+                    isUsingItem=true;
+                    itemType = 1;
+                    numOfGrenade--;
+                }
                 break;
             case 'x':
-                isUsingItem=true;
-                itemType = 2;
+                if (numOfNet>0){
+                    isUsingItem=true;
+                    itemType = 2;
+                    numOfNet--;
+                }
+
                 break;
             case 'c':
-                isUsingItem=true;
-                itemType = 3;
+                if (numOfMine>0){
+                    isUsingItem=true;
+                    itemType = 3;
+                    numOfMine--;
+                }
+
                 break;
             case '1':
                 isUsingItem=true;
@@ -139,6 +159,15 @@ public class Player extends GameObject {
                 shotAnimation.draw(g, posX - sprite.getWidth() * 3 / 11 + 210, posY + sprite.getHeight() * 2 / 10);
                 smokeAnimation.draw(g, posX + 10, posY + 30);
             }
+            if (type==0){
+                sprite = sprite1;
+            }
+            else if (type==1){
+                sprite = sprite2;
+            }
+            else {
+                sprite = sprite3;
+            }
             g.drawImage(sprite, posX - sprite.getWidth() * 3 / 11, posY + sprite.getHeight() * 2 / 10, null);
 
             switch (itemType) {
@@ -157,7 +186,10 @@ public class Player extends GameObject {
         }
         g.setColor(Color.green);
         g.drawString(""+money, 50, 380);
-        //g.drawString("HP: "+healthPoint, 10, 400);
+        g.drawString("HP: "+healthPoint+"/"+maxHP, 50, 430);
+        g.drawString(numOfGrenade+"", 592, 392);
+        g.drawString(numOfNet+"", 592, 425);
+        g.drawString(numOfMine+"", 592, 453);
         g.setColor(Color.white);
     }
 
@@ -167,6 +199,7 @@ public class Player extends GameObject {
         if (healthPoint<=0){
             healthPoint=0;
             isAlive = false;
+
         }
     }
 }
