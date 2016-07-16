@@ -23,15 +23,12 @@ public class Player extends GameObject {
     public int damage;
     public boolean isUsingItem=false;
     public int usingItemTime=0, usingNetTime=0;
-    public int spriteUsingItemPosX, spriteUsingItemPosY;
-    public int grenadeIconPosX, grenadeIconPosY;
     public Animation shotAnimation,smokeAnimation;
     public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
     public GrenadeUsingAnimation NetAnimation;
     BufferedImage sprite1, sprite2, sprite3;
     BufferedImage spriteUsingGrenade, iconGrenade;
     BufferedImage iconNet;
-//    BufferedImage iconMine;
     String fileName1 = "Resource/Player/Player_TYPE1.png";
     String fileName2 = "Resource/Player/Player_TYPE2.png";
     String fileName3 = "Resource/Player/Player_TYPE3.png";
@@ -57,9 +54,6 @@ public class Player extends GameObject {
 
 
         healthPoint = 2000;
-//        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
-//        grenadeIconPosX=300; grenadeIconPosY=350;
-
 
     }
 
@@ -75,7 +69,6 @@ public class Player extends GameObject {
     }
     public boolean isShooting=false;
     public void shot(){
-        //System.out.println("shot");
         isShooting=true;
         if (type==0){
             damage=3;
@@ -120,7 +113,7 @@ public class Player extends GameObject {
     @Override
     public void draw(Graphics g) {
         if (usingItemTime==0) {
-            //System.out.println(usingItemTime);
+
             if (isShooting) {
                 shotAnimation.draw(g, posX - sprite.getWidth() * 3 / 11 + 210, posY + sprite.getHeight() * 2 / 10);
                 smokeAnimation.draw(g, posX + 10, posY + 30);
@@ -139,7 +132,7 @@ public class Player extends GameObject {
             }
 
         }else {
-            //System.out.println(usingItemTime);
+
             GrenadeUsingAnimation.draw(g);
             GrenadeAnimation.draw(g);
         }
@@ -152,23 +145,6 @@ public class Player extends GameObject {
     @Override
     public void update() {
         super.update();
-
-//        if (!isUsingItem) {
-//            spriteUsingItemPosX = 300;
-//            spriteUsingItemPosY = 400;
-//            grenadeIconPosX = 300;
-//            grenadeIconPosY = 350;
-//        }
-//        if (usingItemTime == 0) {
-//            isUsingItem = false;
-//            spriteUsingItemPosX = 300;
-//            spriteUsingItemPosY = 400;
-//            grenadeIconPosX = 300;
-//            grenadeIconPosY = 350;
-//        }
-//        spriteUsingItemPosX-=5*usingItemTime;
-//        spriteUsingItemPosY-=5*usingItemTime;
-//        grenadeIconPosY-=10*usingItemTime;
         if (healthPoint<=0){
             healthPoint=0;
             isAlive = false;
