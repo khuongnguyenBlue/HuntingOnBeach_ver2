@@ -26,10 +26,11 @@ public class Player extends GameObject {
     public int checkGun;
     public int damage;
     public boolean isUsingItem=false;
-    public int usingItemTime=0, usingNetTime=0;
+    public int usingItemTime=0, usingNetTime=0,usingSupporter1Time=0, usingSupporter2Time=0;
     public Animation shotAnimation,smokeAnimation;
     public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
     public GrenadeUsingAnimation NetAnimation;
+
     BufferedImage sprite1, sprite2, sprite3;
     BufferedImage spriteUsingGrenade, iconGrenade;
     BufferedImage iconNet;
@@ -45,7 +46,6 @@ public class Player extends GameObject {
             spriteUsingGrenade= resize(ImageIO.read(new File("Resource/Player/Player_HAND.png")),2);
             iconGrenade = ImageIO.read(new File("Resource/char/image 547.png"));
             iconNet = resizeicon(ImageIO.read(new File("Resource/char/image 956.png")),200,200);
-
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,6 +114,14 @@ public class Player extends GameObject {
                 isUsingItem=true;
                 itemType = 3;
                 break;
+            case '1':
+                isUsingItem=true;
+                itemType = 11;
+                break;
+            case '2':
+                isUsingItem=true;
+                itemType = 12;
+                break;
             default:
                 break;
 
@@ -133,9 +141,7 @@ public class Player extends GameObject {
                 case 2:
                     if (usingNetTime>0) NetAnimation.draw(g);
                     break;
-                case 3:
 
-                    break;
                 default:
                     break;
             }

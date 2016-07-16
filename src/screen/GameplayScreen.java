@@ -34,6 +34,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     EnemyFactory enemyFactory = new EnemyFactory(player);
     public int numOfDeath;
     public int wonTimeCount;
+
     ArrayList<Enemies>  enemiesList;
     ArrayList<Mine> minesList;
     GameWindow gameWindow;
@@ -97,7 +98,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             minesList = new ArrayList<Mine>();
         }
         else {
-            System.out.println(numOfDeath);
+            //System.out.println(numOfDeath);
             numOfDeath = 0;
             drawnBackground.update();
             player.shotAnimation.update();
@@ -177,9 +178,10 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                                 }
                             }
                         }
-
-
                         break;
+
+
+
                     default:
                         break;
                 }
@@ -222,6 +224,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 402,null);
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 431,null);
         bufferGraphics.drawImage(MoneyBoard_icon, 10, 355,null);
+
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
         }
