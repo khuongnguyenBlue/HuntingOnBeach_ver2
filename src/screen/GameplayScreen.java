@@ -26,7 +26,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
     Player player=new Player();
-
+    public int numOfDeath;
+    public boolean won = false;
     ArrayList<Enemies>  enemiesList = new ArrayList<>();
     ArrayList<Mine> minesList= new ArrayList<>();
     GameWindow gameWindow;
@@ -69,6 +70,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     }
     @Override
     public void update() {
+        numOfDeath=0;
         drawnBackground.update();
         player.shotAnimation.update();
         player.smokeAnimation.update();
@@ -152,7 +154,15 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         for (Enemies e: enemiesList){
             e.update();
+            if (e.healthPoint==0){
+                numOfDeath++;
+            }
 
+        }
+        if (numOfDeath==enemiesList.size()){
+            ShopScreen shopScreen = new ShopScreen(gameWindow);
+            gameWindow.addMouseListener(shopScreen);
+            GameManager.getInstance().getStackScreen().push(shopScreen);
         }
 
         for (Mine m:minesList){

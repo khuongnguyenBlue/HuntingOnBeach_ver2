@@ -13,6 +13,7 @@ public class GameObject {
     public BufferedImage sprite;
 
     public int posX, posY;
+    public int maxHP;
     public int healthPoint;
     public boolean isAlive = true;
 
