@@ -184,7 +184,6 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         }
         for (Mine m: minesList){
             if (m.isAlive) {
-                System.out.println("1");
                 m.draw(bufferGraphics);
         }}
         player.draw(bufferGraphics);
