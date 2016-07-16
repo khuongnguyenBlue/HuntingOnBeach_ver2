@@ -51,10 +51,10 @@ public class GameWindow extends Frame implements Runnable{
         MenuScreen menuScreen = new MenuScreen(this);
         this.addMouseListener(menuScreen);
         GameManager.getInstance().getStackScreen().push(menuScreen);
-        music("Resource/Sound/sound_11.wav");
+        music();
     }
 
-    public static void music(String SoundSource)
+    public static void music()
     {
         AudioPlayer MGP = AudioPlayer.player;
         AudioStream BGM;
@@ -64,7 +64,7 @@ public class GameWindow extends Frame implements Runnable{
 
         try
         {
-            BGM = new AudioStream(new FileInputStream(SoundSource));
+            BGM = new AudioStream(new FileInputStream("Resource/Sound/sound_18.wav"));
             AudioPlayer.player.start(BGM);
             MD = BGM.getData();
             loop = new ContinuousAudioDataStream(MD);

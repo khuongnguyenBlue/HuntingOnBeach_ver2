@@ -146,8 +146,8 @@ public class Player extends GameObject {
             GrenadeAnimation.draw(g);
         }
         g.setColor(Color.green);
-        g.drawString("$ "+money, 10, 420);
-        g.drawString("HP: "+healthPoint, 10, 450);
+        g.drawString(""+money, 50, 380);
+        //g.drawString("HP: "+healthPoint, 10, 400);
         g.setColor(Color.white);
     }
 

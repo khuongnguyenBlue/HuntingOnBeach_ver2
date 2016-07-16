@@ -26,7 +26,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon,iconMine;
-
+    BufferedImage C_icon,X_icon,Z_icon, QuantityBoard_icon, MoneyBoard_icon;
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
@@ -42,8 +42,13 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     public GameplayScreen(GameWindow gameWindow){
         try {
             yatchImage= ImageIO.read(new File("Resource/Background/image 132.png"));
-            shipImage=ImageIO.read(new File("Resource/Background/image 1134.png"));
+            shipImage= ImageIO.read(new File("Resource/Background/image 1134.png"));
             iconMine = ImageIO.read(new File("Resource/char/image 36.png"));
+            C_icon = ImageIO.read(new File("Resource/char/C_icon.png"));
+            X_icon = ImageIO.read(new File("Resource/char/X_icon.png"));
+            Z_icon = ImageIO.read(new File("Resource/char/Z_icon.png"));
+            QuantityBoard_icon = ImageIO.read(new File("Resource/char/QuantityBoard_icon.png"));
+            MoneyBoard_icon = ImageIO.read(new File("Resource/char/MoneyBoard_icon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -210,6 +215,13 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             countScreen+=5;}
         bufferGraphics.drawImage(yatchImage,400,200,null);
         bufferGraphics.drawImage(shipImage,0,350,null);
+        bufferGraphics.drawImage(Z_icon, 520, 370,null);
+        bufferGraphics.drawImage(X_icon, 520, 400,null);
+        bufferGraphics.drawImage(C_icon, 520, 430,null);
+        bufferGraphics.drawImage(QuantityBoard_icon, 580, 371,null);
+        bufferGraphics.drawImage(QuantityBoard_icon, 580, 402,null);
+        bufferGraphics.drawImage(QuantityBoard_icon, 580, 431,null);
+        bufferGraphics.drawImage(MoneyBoard_icon, 10, 355,null);
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
         }
