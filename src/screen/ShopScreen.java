@@ -91,7 +91,7 @@ public class ShopScreen extends Screen implements MouseListener{
                 player.numOfGrenade++;
             }
             if (nextRect.contains(e.getX(), e.getY())) {
-                GameManager.getInstance().getStackScreen().pop();
+                nextRound=true;
             }
 
         }
@@ -119,7 +119,9 @@ public class ShopScreen extends Screen implements MouseListener{
 
     @Override
     public void update() {
-
+        System.out.println(nextRound);
+        if(nextRound)
+            GameManager.getInstance().getStackScreen().pop();
     }
 
     @Override
