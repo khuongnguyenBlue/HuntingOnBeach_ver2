@@ -57,6 +57,7 @@ public class Enemies extends GameObject {
                 isAlive = false;
                 isGoing = false;
                 player.money += this.maxHP;
+                player.exp += this.maxHP/2;
             }
         }
     }

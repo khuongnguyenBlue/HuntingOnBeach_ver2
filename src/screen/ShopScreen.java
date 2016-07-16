@@ -39,10 +39,10 @@ public class ShopScreen extends Screen implements MouseListener{
         this.player = player;
         try {
             shopScreen = ImageIO.read(new File("Resource/game_re/ShopScreen.png"));
-            playerType1 = ImageIO.read(new File("Resource/Player/Player_TYPE1.png"));
-            playerType = playerType1;
-            playerType2 = ImageIO.read(new File("Resource/Player/Player_TYPE2.png"));
-            playerType3 = ImageIO.read(new File("Resource/Player/Player_TYPE3.png"));
+            playerType1 = resizeIcon(ImageIO.read(new File("Resource/Player/Player_TYPE1.png")), 148, 121);
+            playerType2 = resizeIcon(ImageIO.read(new File("Resource/Player/Player_TYPE2.png")), 148, 121);
+            playerType3 = resizeIcon(ImageIO.read(new File("Resource/Player/Player_TYPE3.png")), 148, 121);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,6 +58,16 @@ public class ShopScreen extends Screen implements MouseListener{
 
 
 
+    }
+    public static BufferedImage resizeIcon(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
     }
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -91,7 +101,7 @@ public class ShopScreen extends Screen implements MouseListener{
                 player.numOfGrenade++;
             }
             if (nextRect.contains(e.getX(), e.getY())) {
-                nextRound=true;
+                GameManager.getInstance().getStackScreen().pop();
             }
 
         }
@@ -119,13 +129,25 @@ public class ShopScreen extends Screen implements MouseListener{
 
     @Override
     public void update() {
-        System.out.println(nextRound);
-        if(nextRound)
-            GameManager.getInstance().getStackScreen().pop();
     }
 
     @Override
     public void draw(Graphics g) {
         g.drawImage(shopScreen, 8, 30, null);
+        switch (player.type){
+            case 0:
+                g.drawImage(playerType1, 360, 340, null);
+                break;
+            case 1:
+                g.drawImage(playerType2, 360, 340, null);
+                break;
+            case 2:
+                g.drawImage(playerType3, 360, 340, null);
+        }
+        g.setColor(Color.green);
+        g.drawString(""+player.money, 150, 253);
+        g.drawString(""+player.healthPoint, 150, 283);
+        g.drawString(""+player.exp, 150, 350);
+        g.setColor(Color.white);
     }
 }
