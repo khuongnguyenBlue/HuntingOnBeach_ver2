@@ -27,7 +27,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     public static Player player=new Player();
     EnemyFactory enemyFactory = new EnemyFactory(player);
     public int numOfDeath;
-    public boolean won = false;
+    public int wonTimeCount;
     ArrayList<Enemies>  enemiesList;
     ArrayList<Mine> minesList;
     GameWindow gameWindow;
@@ -73,109 +73,115 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         return dimg;
     }
+
     @Override
     public void update() {
         if (numOfDeath==enemiesList.size()){
+
+            ShopScreen shopScreen = new ShopScreen(gameWindow, player);
+            gameWindow.addMouseListener(shopScreen);
+            GameManager.getInstance().getStackScreen().push(shopScreen);
+            gameLevel.upGameLvl();
             enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
             minesList = new ArrayList<Mine>();
         }
-        numOfDeath=0;
-        drawnBackground.update();
-        player.shotAnimation.update();
-        player.smokeAnimation.update();
-        if (isPressing) {
-            player.shot();
-            for (Enemies e: enemiesList){
-                e.checkIfHit(player.posX+25, player.posY+25);
+        else {
+            System.out.println(numOfDeath);
+            numOfDeath = 0;
+            drawnBackground.update();
+            player.shotAnimation.update();
+            player.smokeAnimation.update();
+            if (isPressing) {
+                player.shot();
+                for (Enemies e : enemiesList) {
+                    e.checkIfHit(player.posX + 25, player.posY + 25);
+                }
+
+
             }
 
+            if (player.isUsingItem) {
+                switch (player.itemType) {
+                    case 1:
+                        player.usingItemTime++;
+                        player.GrenadeUsingAnimation.update();
+                        player.GrenadeAnimation.update();
+                        if (player.usingItemTime == 10) {
+                            for (Enemies e : enemiesList) {
+                                if (e.isGoing && e.isAlive) {
+                                    e.isAlive = false;
+                                    player.money += e.maxHP;
+                                    e.healthPoint = 0;
 
-        }
-
-        if (player.isUsingItem) {
-            switch (player.itemType){
-                case 1:
-                    player.usingItemTime++;
-                    player.GrenadeUsingAnimation.update();
-                    player.GrenadeAnimation.update();
-                    if (player.usingItemTime==10) {
-                        for(Enemies e: enemiesList){
-                            if (e.isGoing&&e.isAlive) {
-                                e.isAlive = false;
-                                player.money+=e.maxHP;
-                                e.healthPoint = 0;
-
+                                }
                             }
                         }
-                    }
-                    if (player.usingItemTime > 10) {
-                        player.usingItemTime = 0;
-                        player.isUsingItem=false;
-                        player.GrenadeUsingAnimation.posX=300; player.GrenadeUsingAnimation.posY=400;
-                        player.GrenadeAnimation.posX=300; player.GrenadeAnimation.posY=350;
-                    }
-                    break;
-                case 2:
-                    player.usingNetTime++;
-                    if(player.NetAnimation.posX>=50) {
+                        if (player.usingItemTime > 10) {
+                            player.usingItemTime = 0;
+                            player.isUsingItem = false;
+                            player.GrenadeUsingAnimation.posX = 300;
+                            player.GrenadeUsingAnimation.posY = 400;
+                            player.GrenadeAnimation.posX = 300;
+                            player.GrenadeAnimation.posY = 350;
+                        }
+                        break;
+                    case 2:
+                        player.usingNetTime++;
+                        if (player.NetAnimation.posX >= 50) {
 //                        player.NetAnimation.speedX = 0;
-                        player.NetAnimation.update();
-                    }
-                        if (player.usingNetTime==10) {
+                            player.NetAnimation.update();
+                        }
+                        if (player.usingNetTime == 10) {
 
-                        for(Enemies e: enemiesList){
+                            for (Enemies e : enemiesList) {
 
-                            e.speed=-1;
+                                e.speed = -1;
+
+                            }
 
                         }
+                        if (player.usingNetTime > 50) {
+                            player.usingNetTime = 0;
+                            player.isUsingItem = false;
+                            for (Enemies e : enemiesList) {
 
-                    }
-                    if (player.usingNetTime > 50) {
-                        player.usingNetTime = 0;
-                        player.isUsingItem=false;
-                        for(Enemies e: enemiesList){
+                                e.speed = 1 + (int) (Math.random() * 1);
 
-                            e.speed=1 + (int) (Math.random() * 1);
+                            }
+                            player.NetAnimation.posX = 200;
+                            player.NetAnimation.posY = 150;
 
                         }
-                        player.NetAnimation.posX=200; player.NetAnimation.posY=150;
+                        break;
+                    case 3:
+                        if (minesList.size() < 6) {
+                            minesList.add(new Mine(iconMine, 120 + (int) (Math.random() * 100), 150 + (int) (Math.random() * 200)));
+                        }
+                        for (Mine m : minesList) {
+                            for (Enemies e : enemiesList) {
+                                if ((new Rectangle(e.posX, e.posY, e.sprite.getWidth(), e.sprite.getHeight()).contains(m.posX, m.posY + m.sprite.getHeight() / 2) && m.isAlive)) {
 
-                    }
-                    break;
-                case 3:
-                    if (minesList.size()<6){
-                        minesList.add(new Mine(iconMine, 120 + (int) (Math.random()*100),150 + (int) (Math.random() * 200)));
-                    }
-                    for (Mine m: minesList){
-                        for (Enemies e: enemiesList){
-                            if ((new Rectangle(e.posX, e.posY, e.sprite.getWidth(), e.sprite.getHeight()).contains(m.posX, m.posY+m.sprite.getHeight()/2)&&m.isAlive)){
-
-                                e.isAlive=false;
-                                m.isAlive=false;
+                                    e.isAlive = false;
+                                    m.isAlive = false;
+                                }
                             }
                         }
-                    }
 
 
-                    break;
-                default: break;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            for (Enemies e: enemiesList){
+                e.update();
+                if (e.isExploded){
+                    numOfDeath++;
+                }
             }
 
-        }
 
 
-        for (Enemies e: enemiesList){
-            e.update();
-            if (e.isExplosed){
-                numOfDeath++;
-            }
-
-        }
-        if (numOfDeath==enemiesList.size()){
-            gameLevel.upGameLvl();
-            ShopScreen shopScreen = new ShopScreen(gameWindow, player);
-            GameManager.getInstance().getStackScreen().push(shopScreen);
-            gameWindow.addMouseListener(shopScreen);
         }
 
         if (player.isAlive==false){
@@ -201,7 +207,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
         }
-        for (Mine m: minesList){
+        for (Mine m:minesList){
             if (m.isAlive) {
                 m.draw(bufferGraphics);
         }}

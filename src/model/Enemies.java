@@ -13,12 +13,13 @@ import java.io.IOException;
 public class Enemies extends GameObject {
     public int damage;
     public int speed = 1 + (int) (Math.random() * 1);
-    public int explosionType;
-    public boolean isExplosed=false;
+    public int explosionType;public boolean isExplosed=false;
     public boolean isGoing=false;
     int countShotTime = 0;
     int countGoingTime = 0;
     int explosiontime = 0;
+    public boolean isExploded = false;
+
     int time;
     Player player;
     Animation explosionAnimation,shotAnimation;
@@ -105,7 +106,7 @@ public class Enemies extends GameObject {
         else {
             if (explosiontime <= 30&&isGoing)
                 explosionAnimation.draw(g, posX + sprite.getWidth() / 2, posY - 30);
-            if (explosiontime>30) isExplosed=true;
+            if (explosiontime>30) isExploded=true;
         }
         if (explosiontime==0&&isGoing){
             g.setColor(Color.white);
