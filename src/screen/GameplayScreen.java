@@ -20,15 +20,16 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon,iconMine;
-    EnemyFactory enemyFactory;
+
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
-    Player player=new Player();
+    public static Player player=new Player();
+    EnemyFactory enemyFactory = new EnemyFactory(player);
     public int numOfDeath;
     public boolean won = false;
-    ArrayList<Enemies>  enemiesList = new ArrayList<>();
-    ArrayList<Mine> minesList= new ArrayList<>();
+    ArrayList<Enemies>  enemiesList;
+    ArrayList<Mine> minesList;
     GameWindow gameWindow;
     GameLevel gameLevel = new GameLevel();
 
@@ -41,12 +42,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             e.printStackTrace();
         }
         this.gameWindow = gameWindow;
-        enemyFactory = new EnemyFactory(player);
-        initEnemies(enemyFactory);
+        enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
+        minesList = new ArrayList<>();
 
 
     }
-    void initEnemies (EnemyFactory enemyFactory){
+    ArrayList<Enemies> initEnemies (EnemyFactory enemyFactory, ArrayList<Enemies> enemiesList){
         for (int i=0; i<gameLevel.numOfLv1(); i++){
             enemiesList.add(enemyFactory.getEnemy(1));
         }
@@ -59,6 +60,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         for (int i=0; i<gameLevel.numOfLv4(); i++){
             enemiesList.add(enemyFactory.getEnemy(4));
         }
+        return enemiesList;
     }
 
     public static BufferedImage resizeicon(BufferedImage img, int newW, int newH) {
@@ -73,8 +75,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     }
     @Override
     public void update() {
-        if (enemiesList.size()==0){
-            initEnemies(enemyFactory);
+        if (numOfDeath==enemiesList.size()){
+            enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
+            minesList = new ArrayList<Mine>();
         }
         numOfDeath=0;
         drawnBackground.update();
@@ -169,12 +172,6 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         }
         if (numOfDeath==enemiesList.size()){
-            for (Enemies e:enemiesList){
-                enemiesList.remove(e);
-            }
-            for (Mine m:minesList){
-                minesList.remove(m);
-            }
             gameLevel.upGameLvl();
             ShopScreen shopScreen = new ShopScreen(gameWindow, player);
             gameWindow.addMouseListener(shopScreen);
