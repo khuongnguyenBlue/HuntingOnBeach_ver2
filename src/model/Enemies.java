@@ -17,8 +17,6 @@ import java.io.IOException;
  * Created by Laptop88 on 7/13/2016.
  */
 public class Enemies extends GameObject {
-    public int damage;
-    public int speed = 1 + (int) (Math.random() * 1);
     public int explosionType;
     public boolean isGoing=false;
     int countShotTime = 0;
@@ -31,6 +29,7 @@ public class Enemies extends GameObject {
     Animation explosionAnimation,shotAnimation;
     protected int shotPosX, shotPosY;
     public Enemies(String fileName, Player player,int time) {
+        speed = 1 + (int) (Math.random() * 1);
         posY = 150 + (int) (Math.random() * 200);
         this.player = player;
         try {

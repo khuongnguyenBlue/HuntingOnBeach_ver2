@@ -116,11 +116,15 @@ public class Player extends GameObject {
                 break;
             case '1':
                 isUsingItem=true;
-                itemType = 11;
+                itemType = 4;
                 break;
             case '2':
                 isUsingItem=true;
-                itemType = 12;
+                itemType = 5;
+                break;
+            case '3':
+                isUsingItem=true;
+                itemType = 6;
                 break;
             default:
                 break;

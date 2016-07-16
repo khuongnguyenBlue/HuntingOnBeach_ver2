@@ -112,7 +112,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
             }
 
-            if (player.isUsingItem) {
+            if (player.itemType!=0) {
                 switch (player.itemType) {
                     case 1:
                         player.usingItemTime++;
@@ -179,9 +179,15 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                             }
                         }
                         break;
+                    case 4:
 
-
-
+                        Supporter1 supporter1 = new Supporter1();
+                        break;
+                    case 5:
+                        Supporter2 supporter2 = new Supporter2();
+                        break;
+                    case 6:
+                        Supporter3 supporter3 = new Supporter3();
                     default:
                         break;
                 }

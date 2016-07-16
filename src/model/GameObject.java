@@ -11,7 +11,7 @@ import java.io.IOException;
  */
 public class GameObject {
     public BufferedImage sprite;
-
+    public int speed, damage;
     public int posX, posY;
     public int maxHP;
     public int healthPoint;
