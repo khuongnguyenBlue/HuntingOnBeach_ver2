@@ -48,25 +48,25 @@ public class AboutScreen extends Screen implements MouseListener{
         g.drawImage(background, 0, 0, null);
         g.drawImage(guideBoat, 400, 60, null);
         g.drawImage(guideYou, 180, 300, null);
-        g.drawString("Mr.K & Mr.H", 600, 460);
+        g.drawString("Kenny Khuong & Hoangelato", 470, 460);
         switch (state){
             case 0:
-                g.drawImage(guide1, 10, 10, null);
+                g.drawImage(guide1, 10, 30, null);
                 break;
             case 1:
-                g.drawImage(guide2, 10, 10, null);
+                g.drawImage(guide2, 10, 30, null);
                 break;
             case 2:
-                g.drawImage(guide3, 10, 10, null);
+                g.drawImage(guide3, 10, 30, null);
                 break;
             case 3:
-                g.drawImage(guide4, 10, 10, null);
+                g.drawImage(guide4, 10, 30, null);
                 break;
             case 4:
-                g.drawImage(guide5, 10, 10, null);
+                g.drawImage(guide5, 10, 30, null);
                 break;
             case 5:
-                g.drawImage(guide6, 10, 10, null);
+                g.drawImage(guide6, 10, 30, null);
                 break;
             case 6:
                 state=0;

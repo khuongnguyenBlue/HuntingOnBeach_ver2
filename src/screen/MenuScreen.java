@@ -24,16 +24,16 @@ public class MenuScreen extends Screen implements MouseListener{
     GameWindow gameWindow;
     public MenuScreen(GameWindow gameWindow){
         try {
-            playImage = ImageIO.read(new File("Resource/icon/play_icon.png"));
+            playImage = ImageIO.read(new File("Resource/icon/play.png"));
            // menuImage = ImageIO.read(new File("Resource/icon/menu_icon.png"));
-            aboutImage = ImageIO.read(new File("Resource/icon/about_icon.png"));
+            aboutImage = ImageIO.read(new File("Resource/icon/guide.png"));
             shopImage = ImageIO.read(new File("Resource/icon/shop_icon.png"));
            // continueImage = ImageIO.read(new File("Resource/icon/continue_icon.png"));
             background = ImageIO.read(new File("Resource/game_re/image 634.jpg"));
            //menuRect = new Rectangle((background.getWidth()-menuImage.getWidth())/2, background.getHeight()/2-20,menuImage.getWidth(), menuImage.getHeight());
-            playRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+40,playImage.getWidth(), playImage.getHeight());
+            playRect = new Rectangle(385, 316,playImage.getWidth(), playImage.getHeight());
             //continueRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+80,playImage.getWidth(), playImage.getHeight());
-            aboutRect = new Rectangle((background.getWidth()-playImage.getWidth())/2, background.getHeight()/2+120,playImage.getWidth(),playImage.getHeight());
+            aboutRect = new Rectangle(381, 352,playImage.getWidth(),playImage.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,9 +51,9 @@ public class MenuScreen extends Screen implements MouseListener{
     public void draw(Graphics g) {
         g.drawImage(background, 0, 0, null);
         //g.drawImage(menuImage, (int)menuRect.getX(), (int)menuRect.getY(), null);
-        g.drawImage(playImage, (int)playRect.getX(), (int)playRect.getY(), null);
+        g.drawImage(playImage, 385, 316, null);
        // g.drawImage(continueImage, (int)continueRect.getX(), (int)continueRect.getY(), null);
-        g.drawImage(aboutImage, (int)aboutRect.getX(), (int)aboutRect.getY(), null);
+        g.drawImage(aboutImage, 381, 352, null);
 
     }
 
