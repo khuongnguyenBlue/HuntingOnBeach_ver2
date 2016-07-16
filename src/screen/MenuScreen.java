@@ -66,6 +66,11 @@ public class MenuScreen extends Screen implements MouseListener{
             gameWindow.addKeyListener(gameplayScreen);
             GameManager.getInstance().getStackScreen().push(gameplayScreen);
         }
+        if (aboutRect.contains(e.getX(), e.getY())){
+            AboutScreen aboutScreen = new AboutScreen(gameWindow);
+            gameWindow.addMouseListener(aboutScreen);
+            GameManager.getInstance().getStackScreen().push(aboutScreen);
+        }
 
     }
 

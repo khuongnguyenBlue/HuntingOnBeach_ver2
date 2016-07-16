@@ -136,18 +136,18 @@ public class ShopScreen extends Screen implements MouseListener{
         g.drawImage(shopScreen, 8, 30, null);
         switch (player.type){
             case 0:
-                g.drawImage(playerType1, 360, 340, null);
+                g.drawImage(playerType1, 350, 340, null);
                 break;
             case 1:
-                g.drawImage(playerType2, 360, 340, null);
+                g.drawImage(playerType2, 350, 340, null);
                 break;
             case 2:
-                g.drawImage(playerType3, 360, 340, null);
+                g.drawImage(playerType3, 350, 340, null);
         }
         g.setColor(Color.green);
-        g.drawString(""+player.money, 150, 253);
+        g.drawString(""+player.money, 150, 255);
         g.drawString(""+player.healthPoint, 150, 283);
-        g.drawString(""+player.exp, 150, 350);
+        g.drawString(""+player.exp, 150, 329);
         g.setColor(Color.white);
     }
 }
