@@ -17,6 +17,10 @@ import java.io.IOException;
 public class Player extends GameObject {
     public int type = 0;
     public int itemType;
+    public int numOfNet = 2;
+    public int numOfMine = 1;
+    public int numOfGrenade = 1;
+
     public int exp;
     public int money;
     public int checkGun;

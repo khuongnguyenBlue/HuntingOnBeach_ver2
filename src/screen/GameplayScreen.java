@@ -20,7 +20,6 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon,iconMine;
-    GameLevel gameLevel;
     EnemyFactory enemyFactory;
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
@@ -31,6 +30,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     ArrayList<Enemies>  enemiesList = new ArrayList<>();
     ArrayList<Mine> minesList= new ArrayList<>();
     GameWindow gameWindow;
+    GameLevel gameLevel = new GameLevel();
+
     public GameplayScreen(GameWindow gameWindow){
         try {
             yatchImage= ImageIO.read(new File("Resource/Background/image 132.png"));
@@ -40,8 +41,12 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             e.printStackTrace();
         }
         this.gameWindow = gameWindow;
-        GameLevel gameLevel = new GameLevel();
         enemyFactory = new EnemyFactory(player);
+        initEnemies(enemyFactory);
+
+
+    }
+    void initEnemies (EnemyFactory enemyFactory){
         for (int i=0; i<gameLevel.numOfLv1(); i++){
             enemiesList.add(enemyFactory.getEnemy(1));
         }
@@ -54,8 +59,6 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         for (int i=0; i<gameLevel.numOfLv4(); i++){
             enemiesList.add(enemyFactory.getEnemy(4));
         }
-
-
     }
 
     public static BufferedImage resizeicon(BufferedImage img, int newW, int newH) {
@@ -70,6 +73,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     }
     @Override
     public void update() {
+        if (enemiesList.size()==0){
+            initEnemies(enemyFactory);
+        }
         numOfDeath=0;
         drawnBackground.update();
         player.shotAnimation.update();
@@ -93,6 +99,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                         for(Enemies e: enemiesList){
                             if (e.isGoing) {
                                 e.isAlive = false;
+                                player.money+=e.maxHP;
+                                e.healthPoint = 0;
+
                             }
                         }
                     }
@@ -160,13 +169,16 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         }
         if (numOfDeath==enemiesList.size()){
-            ShopScreen shopScreen = new ShopScreen(gameWindow);
+            for (Enemies e:enemiesList){
+                enemiesList.remove(e);
+            }
+            for (Mine m:minesList){
+                minesList.remove(m);
+            }
+            gameLevel.upGameLvl();
+            ShopScreen shopScreen = new ShopScreen(gameWindow, player);
             gameWindow.addMouseListener(shopScreen);
             GameManager.getInstance().getStackScreen().push(shopScreen);
-        }
-
-        for (Mine m:minesList){
-            m.update();
         }
 
         if (player.isAlive==false){
