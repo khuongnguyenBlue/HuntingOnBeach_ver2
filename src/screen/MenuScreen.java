@@ -60,9 +60,10 @@ public class MenuScreen extends Screen implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if (playRect.contains(e.getX(),e.getY())){
-            InstructionScreen instructionScreen = new InstructionScreen(gameWindow);
-            gameWindow.addMouseListener(instructionScreen);
-            GameManager.getInstance().getStackScreen().push(instructionScreen);
+            GameplayScreen gameplayScreen = new GameplayScreen(gameWindow);
+            gameWindow.addMouseListener(gameplayScreen);
+            gameWindow.addMouseMotionListener(gameplayScreen);
+            GameManager.getInstance().getStackScreen().push(gameplayScreen);
         }
 
     }
