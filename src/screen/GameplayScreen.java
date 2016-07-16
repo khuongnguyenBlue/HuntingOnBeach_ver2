@@ -27,7 +27,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
     BufferedImage bufferImage;
     BufferedImage yatchImage,shipImage;
     BufferedImage mouseIcon,iconMine;
-    BufferedImage C_icon,X_icon,Z_icon, QuantityBoard_icon, MoneyBoard_icon;
+    BufferedImage C_icon,X_icon,Z_icon, QuantityBoard_icon, MoneyBoard_icon,spriteSupporter1;
     BackgroundBuild drawnBackground= new BackgroundBuild();
     int mousePressedTime=0, countScreen;
     boolean isPressing = false;
@@ -51,6 +51,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             Z_icon = ImageIO.read(new File("Resource/char/Z_icon.png"));
             QuantityBoard_icon = ImageIO.read(new File("Resource/char/QuantityBoard_icon.png"));
             MoneyBoard_icon = ImageIO.read(new File("Resource/char/MoneyBoard_icon.png"));
+            spriteSupporter1= ImageIO.read(new File("Resource/Player/image 1068.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -195,7 +196,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                                 }
                             }
                         }
-                        if(player.usingSupporter1Time>50) {
+                        if(player.usingSupporter1Time>120) {
                             player.usingSupporter1Time=0;
                             player.isUsingItem=false;
                         }
@@ -248,6 +249,10 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 402,null);
         bufferGraphics.drawImage(QuantityBoard_icon, 580, 431,null);
         bufferGraphics.drawImage(MoneyBoard_icon, 10, 355,null);
+        if(player.usingSupporter1Time>0) {
+            if (640-5*player.usingSupporter1Time>=320){
+            bufferGraphics.drawImage(spriteSupporter1,640-5*player.usingSupporter1Time, 50,null);
+        }}
 
         for (Enemies e:enemiesList){
             e.draw(bufferGraphics);
