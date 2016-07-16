@@ -26,7 +26,7 @@ public class Player extends GameObject {
     public int checkGun;
     public int damage;
     public boolean isUsingItem=false;
-    public int usingItemTime=0, usingNetTime=0,usingSupporter1Time=0, usingSupporter2Time=0;
+    public int usingGrenadeTime=0, usingNetTime=0,usingSupporter1Time=0, usingSupporter2Time=0;
     public Animation shotAnimation,smokeAnimation;
     public GrenadeUsingAnimation GrenadeUsingAnimation, GrenadeAnimation;
     public GrenadeUsingAnimation NetAnimation;
@@ -133,7 +133,7 @@ public class Player extends GameObject {
     }
     @Override
     public void draw(Graphics g) {
-        if (usingItemTime==0) {
+        if (usingGrenadeTime==0) {
 
             if (isShooting) {
                 shotAnimation.draw(g, posX - sprite.getWidth() * 3 / 11 + 210, posY + sprite.getHeight() * 2 / 10);

@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Laptop88 on 7/14/2016.
@@ -115,10 +116,10 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             if (player.itemType!=0) {
                 switch (player.itemType) {
                     case 1:
-                        player.usingItemTime++;
+                        player.usingGrenadeTime++;
                         player.GrenadeUsingAnimation.update();
                         player.GrenadeAnimation.update();
-                        if (player.usingItemTime == 10) {
+                        if (player.usingGrenadeTime == 10) {
                             for (Enemies e : enemiesList) {
                                 if (e.isGoing && e.isAlive) {
                                     e.isAlive = false;
@@ -128,9 +129,9 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                                 }
                             }
                         }
-                        if (player.usingItemTime > 10) {
-                            player.usingItemTime = 0;
-                            player.isUsingItem = false;
+                        if (player.usingGrenadeTime > 10) {
+                            player.usingGrenadeTime = 0;
+                            player.itemType = 0;
                             player.GrenadeUsingAnimation.posX = 300;
                             player.GrenadeUsingAnimation.posY = 400;
                             player.GrenadeAnimation.posX = 300;
@@ -180,14 +181,22 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                         }
                         break;
                     case 4:
+                        player.usingSupporter1Time++;
+                        Supporter1 supporter1 = new Supporter1(player);
+                        supporter1.update();
+                        for (Enemies e:enemiesList){
+                            if (e.isAlive){
+                                e.healthPoint-=supporter1.damage;
+                            }
+                        }
 
-                        Supporter1 supporter1 = new Supporter1();
+
                         break;
                     case 5:
-                        Supporter2 supporter2 = new Supporter2();
+                        Supporter2 supporter2 = new Supporter2(player);
                         break;
                     case 6:
-                        Supporter3 supporter3 = new Supporter3();
+                        Supporter3 supporter3 = new Supporter3(player);
                     default:
                         break;
                 }
