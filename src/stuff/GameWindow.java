@@ -4,12 +4,18 @@ import model.*;
 import screen.GameManager;
 import screen.GameplayScreen;
 import screen.MenuScreen;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -45,8 +51,34 @@ public class GameWindow extends Frame implements Runnable{
         MenuScreen menuScreen = new MenuScreen(this);
         this.addMouseListener(menuScreen);
         GameManager.getInstance().getStackScreen().push(menuScreen);
-
+        music("Resource/Sound/sound_11.wav");
     }
+
+    public static void music(String SoundSource)
+    {
+        AudioPlayer MGP = AudioPlayer.player;
+        AudioStream BGM;
+        AudioData MD;
+
+        ContinuousAudioDataStream loop = null;
+
+        try
+        {
+            BGM = new AudioStream(new FileInputStream(SoundSource));
+            AudioPlayer.player.start(BGM);
+            MD = BGM.getData();
+            loop = new ContinuousAudioDataStream(MD);
+
+        }
+        catch(FileNotFoundException e){
+            System.out.print(e.toString());
+        }
+        catch(IOException error){error.printStackTrace();}
+
+        MGP.start(loop);
+    }
+
+
     public void drawCursor(Graphics g,int posX, int posY) {
         try {
             mouseIcon = ImageIO.read(new File("Resource/Char/aim_icon.png"));
