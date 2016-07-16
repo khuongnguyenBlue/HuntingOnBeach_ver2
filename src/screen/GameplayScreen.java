@@ -113,7 +113,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
             }
 
-            if (player.itemType!=0) {
+            if (player.isUsingItem) {
                 switch (player.itemType) {
                     case 1:
                         player.usingGrenadeTime++;
@@ -131,7 +131,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                         }
                         if (player.usingGrenadeTime > 10) {
                             player.usingGrenadeTime = 0;
-                            player.itemType = 0;
+                            player.isUsingItem=false;
                             player.GrenadeUsingAnimation.posX = 300;
                             player.GrenadeUsingAnimation.posY = 400;
                             player.GrenadeAnimation.posX = 300;
@@ -184,12 +184,21 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                         player.usingSupporter1Time++;
                         Supporter1 supporter1 = new Supporter1(player);
                         supporter1.update();
-                        for (Enemies e:enemiesList){
-                            if (e.isAlive){
-                                e.healthPoint-=supporter1.damage;
+                        if(player.usingSupporter1Time>0){
+                            for (Enemies e:enemiesList) {
+                                if (e.isAlive && e.isGoing) {
+                                e.healthPoint -= supporter1.damage;
+                                    if (e.healthPoint < 0) {
+                                    e.healthPoint = 0;
+                                    e.isAlive = false;
+                                    }
+                                }
                             }
                         }
-
+                        if(player.usingSupporter1Time>50) {
+                            player.usingSupporter1Time=0;
+                            player.isUsingItem=false;
+                        }
 
                         break;
                     case 5:
