@@ -14,7 +14,7 @@ public class Enemies extends GameObject {
     public int damage;
     public int speed = 1 + (int) (Math.random() * 1);
     public int explosionType;
-
+    public boolean isExplosed=false;
     public boolean isGoing=false;
     int countShotTime = 0;
     int countGoingTime = 0;
@@ -105,7 +105,9 @@ public class Enemies extends GameObject {
         else {
             if (explosiontime <= 30&&isGoing)
                 explosionAnimation.draw(g, posX + sprite.getWidth() / 2, posY - 30);
+            if (explosiontime>30) isExplosed=true;
         }
+        System.out.println(explosiontime+"  "+isExplosed);
         if (explosiontime==0&&isGoing){
             g.setColor(Color.white);
             g.drawString("" + healthPoint, posX - 5, posY);

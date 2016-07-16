@@ -166,7 +166,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         for (Enemies e: enemiesList){
             e.update();
-            if (e.healthPoint==0){
+            if (e.isExplosed){
                 numOfDeath++;
             }
 
@@ -174,8 +174,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
         if (numOfDeath==enemiesList.size()){
             gameLevel.upGameLvl();
             ShopScreen shopScreen = new ShopScreen(gameWindow, player);
-            gameWindow.addMouseListener(shopScreen);
             GameManager.getInstance().getStackScreen().push(shopScreen);
+            gameWindow.addMouseListener(shopScreen);
         }
 
         if (player.isAlive==false){

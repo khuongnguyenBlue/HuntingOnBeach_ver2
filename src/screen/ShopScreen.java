@@ -32,6 +32,7 @@ public class ShopScreen extends Screen implements MouseListener{
     public int mineCost = 400;
     public int netCost = 200;
     public int grenadeCost = 800;
+    public boolean nextRound=false;
 
     public ShopScreen(GameWindow gameWindow, Player player){
         this.gameWindow = gameWindow;
@@ -60,40 +61,42 @@ public class ShopScreen extends Screen implements MouseListener{
     }
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (gun2Rect.contains(e.getX(),e.getY()) && player.money>=gun2Cost){
-            player.money-=gun2Cost;
-            player.type = 2;
-        } else{
-        if (gun3Rect.contains(e.getX(), e.getY()) && player.money>=gun3Cost){
-            player.money -= gun3Cost;
-            player.type = 3;
-        }else {
-        if (repairRect.contains(e.getX(), e.getY()) && player.money>=repairCost){
-            player.money -= repairCost;
-            player.healthPoint += repairCost;
-        }else{
-        if (emergenRect.contains(e.getX(), e.getY()) && player.money>=emergentCost){
-            player.money -= emergentCost;
-            player.maxHP += emergentCost;
-        }else {
-        if (netRect.contains(e.getX(), e.getY()) && player.money>=netCost){
-            player.money -= netCost;
-            player.numOfNet ++;
-        }else {
+        if (e.getButton() == 1) {
+            if (gun2Rect.contains(e.getX(), e.getY()) && player.money >= gun2Cost) {
+                player.money -= gun2Cost;
+                player.type = 2;
+            }
+            if (gun3Rect.contains(e.getX(), e.getY()) && player.money >= gun3Cost) {
+                player.money -= gun3Cost;
+                player.type = 3;
+            }
+            if (repairRect.contains(e.getX(), e.getY()) && player.money >= repairCost) {
+                player.money -= repairCost;
+                player.healthPoint += repairCost;
+            }
+            if (emergenRect.contains(e.getX(), e.getY()) && player.money >= emergentCost) {
+                player.money -= emergentCost;
+                player.maxHP += emergentCost;
+            }
+            if (netRect.contains(e.getX(), e.getY()) && player.money >= netCost) {
+                player.money -= netCost;
+                player.numOfNet++;
+            }
             if (mineRect.contains(e.getX(), e.getY()) && player.money >= mineCost) {
                 player.money -= mineCost;
                 player.numOfMine++;
-            } else if (grenadeRect.contains(e.getX(), e.getY()) && player.money >= grenadeCost) {
+            }
+            if (grenadeRect.contains(e.getX(), e.getY()) && player.money >= grenadeCost) {
                 player.money -= grenadeCost;
                 player.numOfGrenade++;
-            } else if (nextRect.contains(e.getX(), e.getY())) {
+            }
+            if (nextRect.contains(e.getX(), e.getY())) {
                 GameManager.getInstance().getStackScreen().pop();
             }
-        }}}}}
 
+        }
 
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
 
