@@ -121,6 +121,6 @@ public class ShopScreen extends Screen implements MouseListener{
 
     @Override
     public void draw(Graphics g) {
-        g.drawImage(shopScreen, 0, 0, null);
+        g.drawImage(shopScreen, 8, 30, null);
     }
 }

@@ -100,7 +100,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
                     player.GrenadeAnimation.update();
                     if (player.usingItemTime==10) {
                         for(Enemies e: enemiesList){
-                            if (e.isGoing) {
+                            if (e.isGoing&&e.isAlive) {
                                 e.isAlive = false;
                                 player.money+=e.maxHP;
                                 e.healthPoint = 0;
