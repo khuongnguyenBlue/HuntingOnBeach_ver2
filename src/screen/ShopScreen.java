@@ -46,14 +46,14 @@ public class ShopScreen extends Screen implements MouseListener{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        gun2Rect = new Rectangle(94+320, 229, 79, 73);
-        gun3Rect = new Rectangle(175+320, 229, 79, 73);
-        repairRect = new Rectangle(13+320, 5, 71, 93);
-        emergenRect = new Rectangle(86+320, 5, 71, 93);
-        grenadeRect = new Rectangle(204+320, 323, 71, 93);
-        netRect = new Rectangle(159+320, 5, 71, 93);
-        mineRect = new Rectangle(235+320, 5, 71, 93);
-        nextRect = new Rectangle(175+320, 449, 130, 23);
+        gun2Rect = new Rectangle(414, 241, 78, 67);
+        gun3Rect = new Rectangle(493, 241, 78, 67);
+        repairRect = new Rectangle(337, 35, 69, 70);
+        emergenRect = new Rectangle(407, 35, 69, 70);
+        grenadeRect = new Rectangle(521, 328, 69, 70);
+        netRect = new Rectangle(477, 35, 69, 70);
+        mineRect = new Rectangle(50, 35, 69, 70);
+        nextRect = new Rectangle(492, 444, 128, 22);
 
 
 
@@ -63,34 +63,34 @@ public class ShopScreen extends Screen implements MouseListener{
         if (gun2Rect.contains(e.getX(),e.getY()) && player.money>=gun2Cost){
             player.money-=gun2Cost;
             player.type = 2;
-        }
+        } else{
         if (gun3Rect.contains(e.getX(), e.getY()) && player.money>=gun3Cost){
             player.money -= gun3Cost;
             player.type = 3;
-        }
+        }else {
         if (repairRect.contains(e.getX(), e.getY()) && player.money>=repairCost){
             player.money -= repairCost;
             player.healthPoint += repairCost;
-        }
+        }else{
         if (emergenRect.contains(e.getX(), e.getY()) && player.money>=emergentCost){
             player.money -= emergentCost;
             player.maxHP += emergentCost;
-        }
+        }else {
         if (netRect.contains(e.getX(), e.getY()) && player.money>=netCost){
             player.money -= netCost;
             player.numOfNet ++;
-        }
-        if (mineRect.contains(e.getX(), e.getY()) && player.money>=mineCost){
-            player.money -= mineCost;
-            player.numOfMine ++;
-        }
-        if (grenadeRect.contains(e.getX(), e.getY()) && player.money>=grenadeCost){
-            player.money -= grenadeCost;
-            player.numOfGrenade ++;
-        }
-        if (nextRect.contains(e.getX(), e.getY())){
-            GameManager.getInstance().getStackScreen().pop();
-        }
+        }else {
+            if (mineRect.contains(e.getX(), e.getY()) && player.money >= mineCost) {
+                player.money -= mineCost;
+                player.numOfMine++;
+            } else if (grenadeRect.contains(e.getX(), e.getY()) && player.money >= grenadeCost) {
+                player.money -= grenadeCost;
+                player.numOfGrenade++;
+            } else if (nextRect.contains(e.getX(), e.getY())) {
+                GameManager.getInstance().getStackScreen().pop();
+            }
+        }}}}}
+
 
     }
 
