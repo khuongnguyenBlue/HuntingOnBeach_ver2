@@ -94,7 +94,7 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
 
         return dimg;
     }
-    int timeReload=0;
+
     @Override
     public void update() {
         if (numOfDeath==enemiesList.size()){
@@ -106,25 +106,17 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             enemiesList = initEnemies(enemyFactory, new ArrayList<Enemies>());
             minesList = new ArrayList<Mine>();
         }
-
         else {
             //System.out.println(numOfDeath);
             numOfDeath = 0;
             drawnBackground.update();
             player.shotAnimation.update();
             player.smokeAnimation.update();
-            if (isPressing && player.armor>0) {
-                player.isShooting = true;
-
+            if (isPressing) {
                 player.shot();
                 player.armor--;
-            }
-            if(player.armor==0) {
-                player.isShooting = false;
-                timeReload++;
-            }
-            if(timeReload==10) player.armor=player.maxArmor;
-            for (Enemies e : enemiesList) {
+
+                for (Enemies e : enemiesList) {
                     e.checkIfHit(player.posX + 25, player.posY + 25);
                 }
 
@@ -253,6 +245,8 @@ public class GameplayScreen extends Screen implements MouseMotionListener, Mouse
             }
 
 
+
+        }
 
         if (player.isAlive==false){
             GameOverScreen gameOverScreen = new GameOverScreen();

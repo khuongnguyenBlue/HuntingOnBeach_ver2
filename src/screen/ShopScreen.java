@@ -101,6 +101,7 @@ public class ShopScreen extends Screen implements MouseListener{
                 player.numOfGrenade++;
             }
             if (nextRect.contains(e.getX(), e.getY())) {
+                nextRect = new Rectangle(0, 0, 0, 0);
                 GameManager.getInstance().getStackScreen().pop();
             }
 

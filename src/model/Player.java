@@ -60,16 +60,7 @@ public class Player extends GameObject {
         healthPoint = maxHP;
 //        spriteUsingItemPosX =300; spriteUsingItemPosY=400;
 //        grenadeIconPosX=300; grenadeIconPosY=350;
-        switch (type){
-            case 0: maxArmor= 10;
-                break;
-            case 1: maxArmor=20;
-                break;
-            case 2: maxArmor=30;
-                break;
-            default:break;
-        }
-        armor=maxArmor;
+
 
         healthPoint = 2000;
 
@@ -87,7 +78,7 @@ public class Player extends GameObject {
     }
     public boolean isShooting=false;
     public void shot(){
-
+        isShooting=true;
         if (type==0){
             damage=3;
             //maxArmor = 10;
