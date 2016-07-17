@@ -147,7 +147,6 @@ public class ShopScreen extends Screen implements MouseListener{
         }
         g.setColor(Color.green);
         g.drawString(""+player.money, 150, 260);
-        g.drawString(""+player.healthPoint, 150, 280);
         g.drawString(""+player.exp, 150, 325);
         g.setColor(Color.white);
     }
